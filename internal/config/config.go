@@ -34,21 +34,7 @@ type Config struct {
 // New initializes the config.
 func New() *Config {
 	once.Do(func() {
-		wd, _ := os.Getwd()
-		fmt.Println("WD:", wd)
-
-		envPath := os.Getenv("ENV_PATH")
-		if envPath == "" {
-			rootPath, err := findRootPathWithEnv(wd)
-			if err != nil {
-				log.Printf("Failed to find .env: %v", err)
-			}
-			envPath = filepath.Join(rootPath, ".env")
-		}
-
-		if err := godotenv.Load(envPath); err != nil {
-			log.Printf("Warning: .env file not found: %v", err)
-		}
+		loadDotEnvIfExists()
 
 		config = &Config{
 			DBUser:            GetEnv("DB_USER", "postgres"),
@@ -67,6 +53,28 @@ func New() *Config {
 	})
 
 	return config
+}
+
+func loadDotEnvIfExists() {
+	envPath := os.Getenv("ENV_PATH")
+
+	if envPath == "" {
+		wd, _ := os.Getwd()
+		rootPath, err := findRootPathWithEnv(wd)
+		if err == nil {
+			envPath = filepath.Join(rootPath, ".env")
+		}
+	}
+
+	if envPath != "" {
+		if err := godotenv.Load(envPath); err == nil {
+			log.Printf("Loaded environment from: %s", envPath)
+		} else {
+			log.Printf("No .env file loaded, relying on actual environment variables")
+		}
+	} else {
+		log.Printf("No .env path found, relying on actual environment variables")
+	}
 }
 
 func findRootPathWithEnv(startDir string) (string, error) {
