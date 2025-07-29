@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7392c3e4-310d-4db0-a866-82d05387307b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/deploy-to-ec2.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/api/main.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/scheduler/main.go" afterDir="false" />
@@ -48,8 +46,6 @@
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/config.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/initiator.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/visit.go" beforeDir="false" />

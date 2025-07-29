@@ -29,7 +29,7 @@ jobs:
             podman stop neliquiz || true
             podman rm neliquiz || true
 
-            podman run -d --name neliquiz -p 80:${{ secrets.HTTP_HOST }} \
+            podman run -d --name neliquiz -p 5080:${{ secrets.HTTP_HOST }} \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
