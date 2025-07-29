@@ -10,6 +10,7 @@ jobs:
   deploy:
     if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'develop'
     runs-on: ubuntu-latest
+    environment: prod
 
     steps:
       - name: SSH and deploy to EC2
@@ -35,7 +36,7 @@ jobs:
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_PORT=${{ secrets.DB_PORT }} \
               -e DB_USER=${{ secrets.DB_USER }} \
-              -e HTTP_HOST=${{ secrets.HTTP_HOST }} \
-              -e HTTP_PORT=${{ secrets.HTTP_PORT }} \
-              -e HTTP_PREFORK=${{ secrets.HTTP_PREFORK }} \
+              -e HTTP_HOST=${{ vars.HTTP_HOST }} \
+              -e HTTP_PORT=${{ vars.HTTP_PORT }} \
+              -e HTTP_PREFORK=${{ vars.HTTP_PREFORK }} \
               neliquiz:latest
