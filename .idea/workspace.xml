@@ -5,37 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7392c3e4-310d-4db0-a866-82d05387307b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/config/config_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/delivery/http/admin_question_handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/delivery/http/dto/question.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/delivery/http/dto/quiz.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/delivery/http/response/helper.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/entities/options.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/entities/options_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/entities/question.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/entities/question_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/question.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/errorx/app_error.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/pool.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/testhelper/cleanup.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/testhelper/pool.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/router.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/errors.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/mocks/question_repository_mock.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/schema/option_schema.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/schema/question_schema.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/usecase/admin_question_usecase.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/usecase/admin_question_usecase_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/api/main.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/scheduler/main.go" afterDir="false" />
@@ -106,7 +76,7 @@
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.1.windows-amd64" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
