@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7392c3e4-310d-4db0-a866-82d05387307b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/api/main.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/scheduler/main.go" afterDir="false" />
@@ -47,6 +46,8 @@
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/config.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/initiator.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/visit.go" beforeDir="false" />
@@ -77,6 +78,7 @@
   <component name="GOROOT" url="file://$USER_HOME$/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.1.windows-amd64" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -102,36 +104,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;Go Test.TestGetConfig in NeliQuizz/config.executor&quot;: &quot;Run&quot;,
-    &quot;Go Test.TestNewConfig in NeliQuiz/internal/config.executor&quot;: &quot;Run&quot;,
-    &quot;Go Test.TestNewConfigWithoutInit in NeliQuiz/internal/config.executor&quot;: &quot;Run&quot;,
-    &quot;Go Test.TestPGQuestionRepository in NeliQuiz/internal/repository.executor&quot;: &quot;Run&quot;,
-    &quot;Go Test.TestPGQuestionRepository/should_create_question_correctly in NeliQuiz/internal/repository.executor&quot;: &quot;Run&quot;,
-    &quot;Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository (1).executor&quot;: &quot;Run&quot;,
-    &quot;Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository.executor&quot;: &quot;Run&quot;,
-    &quot;Makefile Target.migrate-up.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Test.TestGetConfig in NeliQuizz/config.executor": "Run",
+    "Go Test.TestNewConfig in NeliQuiz/internal/config.executor": "Run",
+    "Go Test.TestNewConfigWithoutInit in NeliQuiz/internal/config.executor": "Run",
+    "Go Test.TestPGQuestionRepository in NeliQuiz/internal/repository.executor": "Run",
+    "Go Test.TestPGQuestionRepository/should_create_question_correctly in NeliQuiz/internal/repository.executor": "Run",
+    "Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository (1).executor": "Run",
+    "Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository.executor": "Run",
+    "Makefile Target.migrate-up.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "develop",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "C:/Users/PC",
+    "run.code.analysis.last.selected.profile": "pProject Default"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ],
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;PostgreSQL&quot;
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "PostgreSQL"
     ]
   }
-}</component>
+}]]></component>
   <component name="QodanaReportsService">
     <option name="descriptions">
       <ReportDescription localRun="true" path="C:\Users\PC\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="4747438d-ba6b-4b3e-865a-3a0fc62e3d1d" reportId="NeliQuiz/qodana/2025-07-25" />
