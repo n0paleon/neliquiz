@@ -30,12 +30,13 @@ jobs:
             podman stop neliquiz || true
             podman rm neliquiz || true
 
-            podman run -d --name neliquiz -p 5080:${{ vars.HTTP_HOST }} \
+            podman run -d --name neliquiz -p 5080:${{ vars.HTTP_PORT }} \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_PORT=${{ secrets.DB_PORT }} \
               -e DB_USER=${{ secrets.DB_USER }} \
+              -e DB_SSLMODE=${{ secrets.DB_SSLMODE }} \
               -e HTTP_HOST=${{ vars.HTTP_HOST }} \
               -e HTTP_PORT=${{ vars.HTTP_PORT }} \
               -e HTTP_PREFORK=${{ vars.HTTP_PREFORK }} \
