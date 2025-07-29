@@ -84,7 +84,7 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 		"method": c.Method(),
 	}).Error("unhandled error")
 
-	return c.Status(500).JSON(fiber.Map{
+	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 		"status": "error",
 		"data":   "",
 		"error":  "internal server error",

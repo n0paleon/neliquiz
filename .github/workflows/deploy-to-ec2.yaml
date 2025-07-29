@@ -1,0 +1,41 @@
+name: Deploy to EC2 via Git + Podman (on PR merge from develop)
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'develop'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH and deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ~/app
+            git pull origin main
+
+            /usr/bin/env CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o app cmd/api/main.go
+
+            podman build -t neliquiz:latest .
+
+            podman stop neliquiz || true
+            podman rm neliquiz || true
+
+            podman run -d --name neliquiz -p 80:${{ secrets.HTTP_HOST }} \
+              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_NAME=${{ secrets.DB_NAME }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_PORT=${{ secrets.DB_PORT }} \
+              -e DB_USER=${{ secrets.DB_USER }} \
+              -e HTTP_HOST=${{ secrets.HTTP_HOST }} \
+              -e HTTP_PORT=${{ secrets.HTTP_PORT }} \
+              -e HTTP_PREFORK=${{ secrets.HTTP_PREFORK }} \
+              neliquiz:latest
