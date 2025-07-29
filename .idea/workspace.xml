@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7392c3e4-310d-4db0-a866-82d05387307b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/config/config_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/delivery/http/admin_question_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/delivery/http/dto/question.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/delivery/http/dto/quiz.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/delivery/http/response/helper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/domain/entities/options.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/domain/entities/options_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/domain/entities/question.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/domain/entities/question_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/domain/question.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/errorx/app_error.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/pool.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/testhelper/cleanup.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/testhelper/pool.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/mocks/question_repository_mock.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/schema/option_schema.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/repository/schema/question_schema.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/usecase/admin_question_usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/usecase/admin_question_usecase_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/api/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/scheduler/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/adapters/messaging/rabbitmq.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/adapters/persistence/repository/helper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/adapters/persistence/repository/order_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/adapters/persistence/repository/reset_log_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/core/domain/history.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/core/domain/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/core/ports/message_broker.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/core/ports/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/core/ports/reset_log.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/core/services/order_scheduler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/core/services/order_service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/database/postgres.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/delivery/http/fiber.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/delivery/http/handler/helper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/delivery/http/handler/order_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/delivery/http/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/dto/api.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/dto/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/ent/generate.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/internal/util/converter/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/pkg/config/config_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/pkg/config/viper.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/pkg/errors/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/pkg/log/zap.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/pkg/workerpool/ants.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/internal/messaging/rabbitmq.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/internal/simulator/browser.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/internal/worker/worker.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/types/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/types/order.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/types/user_agent.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/initiator.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/visit.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/data/urls.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/definition/types.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/pkg/memory_db.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/pkg/viper_config.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/utils/logger.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/utils/random_range.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/utils/readlines.go" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file://$USER_HOME$/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.1.windows-amd64" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;n0paleon&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/n0paleon/go-wabot&quot;,
+    &quot;accountId&quot;: &quot;f38169ca-e0ba-4fa9-9a83-6c36392257dd&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2yOcDxlNwhL0kOm25XWeTh0S9wT" />
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;Go Test.TestGetConfig in NeliQuizz/config.executor&quot;: &quot;Run&quot;,
+    &quot;Go Test.TestNewConfig in NeliQuiz/internal/config.executor&quot;: &quot;Run&quot;,
+    &quot;Go Test.TestNewConfigWithoutInit in NeliQuiz/internal/config.executor&quot;: &quot;Run&quot;,
+    &quot;Go Test.TestPGQuestionRepository in NeliQuiz/internal/repository.executor&quot;: &quot;Run&quot;,
+    &quot;Go Test.TestPGQuestionRepository/should_create_question_correctly in NeliQuiz/internal/repository.executor&quot;: &quot;Run&quot;,
+    &quot;Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository (1).executor&quot;: &quot;Run&quot;,
+    &quot;Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository.executor&quot;: &quot;Run&quot;,
+    &quot;Makefile Target.migrate-up.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ],
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
+      &quot;PostgreSQL&quot;
+    ]
+  }
+}</component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\PC\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="4747438d-ba6b-4b3e-865a-3a0fc62e3d1d" reportId="NeliQuiz/qodana/2025-07-25" />
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\domain" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuizz" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuizz\config" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuizz\internal\adapter\repository" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.TestPGQuestionRepository in NeliQuiz/internal/repository">
+    <configuration name="TestNewConfig in NeliQuiz/internal/config" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="NeliQuiz" />
+      <working_directory value="$PROJECT_DIR$/internal/config" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="NeliQuiz/internal/config" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestNewConfig\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPGQuestionRepository in NeliQuiz/internal/repository" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="NeliQuiz" />
+      <working_directory value="$PROJECT_DIR$/internal/repository" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="NeliQuiz/internal/repository" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestPGQuestionRepository\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPGQuestionRepository/should_create_question_correctly in NeliQuiz/internal/repository" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="NeliQuiz" />
+      <working_directory value="$PROJECT_DIR$/internal/repository" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="NeliQuiz/internal/repository" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestPGQuestionRepository\E$/^\Qshould_create_question_correctly\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository (1)" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="NeliQuiz" />
+      <working_directory value="$PROJECT_DIR$/internal/repository" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="NeliQuiz/internal/repository" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestPGQuestionRepository\E$/^\Qshould_find_question_by_id_correctly\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="NeliQuiz" />
+      <working_directory value="$PROJECT_DIR$/internal/repository" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="NeliQuiz/internal/repository" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestPGQuestionRepository\E$/^\Qshould_find_question_by_id_correctly\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestPGQuestionRepository in NeliQuiz/internal/repository" />
+        <item itemvalue="Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository (1)" />
+        <item itemvalue="Go Test.TestPGQuestionRepository/should_find_question_by_id_correctly in NeliQuiz/internal/repository" />
+        <item itemvalue="Go Test.TestPGQuestionRepository/should_create_question_correctly in NeliQuiz/internal/repository" />
+        <item itemvalue="Go Test.TestNewConfig in NeliQuiz/internal/config" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
