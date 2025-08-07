@@ -21,13 +21,14 @@ func NewRouter(
 }
 
 func (r *Router) RegisterRoutes() {
-	route := r.server.app.Group("/api")
+	route := r.server.app.Group("/")
 
 	admin := route.Group("/admin")
-	admin.Post("/create-question", r.adminQuestionHandler.PostCreateQuestion)
-	admin.Get("/get-questions", r.adminQuestionHandler.GetListQuestions)
-	admin.Post("/delete-question", r.adminQuestionHandler.DeleteQuestion)
+	admin.Post("/questions", r.adminQuestionHandler.PostCreateQuestion)
+	admin.Get("/questions", r.adminQuestionHandler.GetListQuestions)
+	admin.Delete("/questions/:id", r.adminQuestionHandler.DeleteQuestion)
+	admin.Get("/questions/:id", r.adminQuestionHandler.GetQuestionDetail)
 
-	route.Get("/get-random", r.userQuestionHandler.GetRandomQuestion)
-	route.Post("/verify-answer", r.userQuestionHandler.CheckAnswer)
+	route.Get("/questions/random", r.userQuestionHandler.GetRandomQuestion)
+	route.Post("/questions/:id/verify", r.userQuestionHandler.CheckAnswer)
 }

@@ -81,7 +81,7 @@ func TestCheckAnswer_Correct(t *testing.T) {
 	mockRepo.On("FindById", "question1").Return(question, nil)
 
 	// Call usecase
-	isCorrect, selected, err := useCase.CheckAnswer("question1", "option1")
+	isCorrect, selected, _, err := useCase.CheckAnswer("question1", "option1")
 
 	assert.NoError(t, err)
 	assert.True(t, isCorrect)
@@ -95,7 +95,7 @@ func TestCheckAnswer_InvalidQuestion(t *testing.T) {
 
 	mockRepo.On("FindById", "invalid-id").Return(nil, assert.AnError)
 
-	isCorrect, selected, err := useCase.CheckAnswer("invalid-id", "option1")
+	isCorrect, selected, _, err := useCase.CheckAnswer("invalid-id", "option1")
 
 	assert.Error(t, err)
 	assert.False(t, isCorrect)
@@ -121,7 +121,7 @@ func TestCheckAnswer_WrongOption(t *testing.T) {
 
 	mockRepo.On("FindById", "question1").Return(question, nil)
 
-	isCorrect, selected, err := useCase.CheckAnswer("question1", "option1")
+	isCorrect, selected, _, err := useCase.CheckAnswer("question1", "option1")
 
 	assert.NoError(t, err)
 	assert.False(t, isCorrect)

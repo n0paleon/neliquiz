@@ -2,27 +2,32 @@ package entities
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
 type Question struct {
-	ID        string
-	Content   string
-	Options   []Option
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID             string
+	Content        string
+	Hit            int
+	Options        []Option
+	Categories     []Category
+	ExplanationURL string
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 }
 
-func NewQuestion(content string) (*Question, error) {
+func NewQuestion(content, explanationURL string) (*Question, error) {
 	if content == "" {
 		return nil, errors.New("content cannot be empty")
 	}
 
 	return &Question{
-		Content:   content,
-		Options:   make([]Option, 0),
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		Content:        content,
+		Options:        make([]Option, 0),
+		ExplanationURL: explanationURL,
+		CreatedAt:      time.Now(),
+		UpdatedAt:      time.Now(),
 	}, nil
 }
 
@@ -40,15 +45,31 @@ func (q *Question) CheckAnswerWithOption(selectedOptionID string) (bool, *Option
 	return false, nil, errors.New("selected option not found in this question")
 }
 
-// ValidateAnswerKey ensures that the Question has exactly one correct answer.
-// It returns an error if there are no correct answers or if more than one option is marked as correct.
-func (q *Question) ValidateAnswerKey() error {
-	var correctCount int
-
-	if len(q.Options) <= 1 {
-		return errors.New("the number of options should be greater than 1")
+// Validate checks if the question satisfies all rules:
+// 1. Max 5 options allowed
+// 2. Option contents must be unique (case-insensitive)
+// 3. Exactly one option must be marked as correct
+func (q *Question) Validate() error {
+	if len(q.Options) == 0 {
+		return errors.New("no options provided")
 	}
 
+	if len(q.Options) > 5 {
+		return errors.New("the maximum number of answer choices is 5")
+	}
+
+	// Check for duplicate option content (case-insensitive)
+	seen := make(map[string]bool)
+	for _, o := range q.Options {
+		content := normalizeString(o.Content)
+		if seen[content] {
+			return errors.New("duplicate option content found: " + o.Content)
+		}
+		seen[content] = true
+	}
+
+	// Check correct answer count
+	correctCount := 0
 	for _, o := range q.Options {
 		if o.IsCorrect {
 			correctCount++
@@ -56,14 +77,19 @@ func (q *Question) ValidateAnswerKey() error {
 	}
 
 	if correctCount == 0 {
-		return errors.New("must have at least one correct answer")
+		return errors.New("must have one correct answer")
 	}
-
 	if correctCount > 1 {
 		return errors.New("only one option can be marked as correct")
 	}
 
 	return nil
+}
+
+// normalizeString converts a string to lowercase and trims spaces.
+// You can extend this later with unicode normalization if needed.
+func normalizeString(s string) string {
+	return strings.ToLower(strings.TrimSpace(s))
 }
 
 func (q *Question) AddOption(option ...Option) error {

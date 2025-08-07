@@ -36,6 +36,7 @@ func main() {
 				return cfg, db
 			},
 			fx.Annotate(repository.NewPGQuestionRepository, fx.As(new(domain.QuestionRepository))),
+			fx.Annotate(repository.NewPGCategoryRepository, fx.As(new(domain.CategoryRepository))),
 			fx.Annotate(usecase.NewAdminQuestionUseCase, fx.As(new(domain.AdminQuestionUseCase))),
 			fx.Annotate(usecase.NewUserQuestionUseCase, fx.As(new(domain.UserQuestionUseCase))),
 			http.NewAdminQuestionHandler,
