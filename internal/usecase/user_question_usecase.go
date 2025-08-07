@@ -3,7 +3,7 @@ package usecase
 import (
 	"NeliQuiz/internal/domain"
 	"NeliQuiz/internal/domain/entities"
-	"errors"
+	"NeliQuiz/internal/errorx"
 )
 
 type UserQuestionUseCase struct {
@@ -13,19 +13,26 @@ type UserQuestionUseCase struct {
 func (u *UserQuestionUseCase) GetRandomQuestion() (*entities.Question, error) {
 	result, err := u.questionRepo.GetRandom()
 	if err != nil {
-		return nil, errors.New("failed to get random question")
+		return nil, errorx.InternalError(err)
 	}
 
 	return result, nil
 }
 
-func (u *UserQuestionUseCase) CheckAnswer(questionID, selectedOptionID string) (bool, *entities.Option, error) {
+func (u *UserQuestionUseCase) CheckAnswer(questionID, selectedOptionID string) (isCorrect bool, option *entities.Option, explanationURL string, err error) {
 	question, err := u.questionRepo.FindById(questionID)
 	if err != nil {
-		return false, nil, errors.New("invalid question id")
+		isCorrect = false
+		explanationURL = ""
+		return
 	}
 
-	return question.CheckAnswerWithOption(selectedOptionID)
+	isCorrect, option, err = question.CheckAnswerWithOption(selectedOptionID)
+	if err != nil {
+		err = errorx.NotFound(err.Error())
+	}
+	explanationURL = question.ExplanationURL
+	return
 }
 
 func NewUserQuestionUseCase(questionRepo domain.QuestionRepository) *UserQuestionUseCase {

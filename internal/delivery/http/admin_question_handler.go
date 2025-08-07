@@ -53,9 +53,20 @@ func (h *AdminQuestionHandler) GetListQuestions(c *fiber.Ctx) error {
 		questions[i] = dto.GetListQuestionsResponse{
 			ID:        result.ID,
 			Content:   result.Content,
+			Hit:       result.Hit,
 			CreatedAt: result.CreatedAt,
 			UpdatedAt: result.UpdatedAt,
 		}
+
+		categories := make([]dto.Category, len(result.Categories))
+		for j, category := range result.Categories {
+			categories[j] = dto.Category{
+				ID:   category.ID,
+				Name: category.Name,
+			}
+		}
+
+		questions[i].Categories = categories
 	}
 
 	return response.SuccessResponse(c, fiber.Map{
@@ -65,16 +76,31 @@ func (h *AdminQuestionHandler) GetListQuestions(c *fiber.Ctx) error {
 }
 
 func (h *AdminQuestionHandler) DeleteQuestion(c *fiber.Ctx) error {
-	input, err := response.ParseAndValidate[dto.PostDeleteQuestionRequest](c)
-	if err != nil {
-		return nil
+	questionID := c.Params("id", "")
+	if questionID == "" {
+		return response.ErrorResponse(c, fiber.StatusBadRequest, "invalid question id")
 	}
 
-	if err := h.questionUseCase.DeleteQuestion(input.QuestionID); err != nil {
+	if err := h.questionUseCase.DeleteQuestion(questionID); err != nil {
 		return err
 	}
 
 	return response.SuccessResponse(c, "question deleted successfully!")
+}
+
+func (h *AdminQuestionHandler) GetQuestionDetail(c *fiber.Ctx) error {
+	questionID := c.Params("id", "")
+	if questionID == "" {
+		return response.ErrorResponse(c, fiber.StatusBadRequest, "invalid question id")
+	}
+
+	question, err := h.questionUseCase.GetQuestionDetail(questionID)
+	if err != nil {
+		return response.ErrorResponse(c, fiber.StatusInternalServerError, err.Error())
+	}
+
+	responseData := dto.EntityToGetQuestionDetailResponse(question)
+	return response.SuccessResponse(c, responseData)
 }
 
 func NewAdminQuestionHandler(questionUseCase domain.AdminQuestionUseCase) *AdminQuestionHandler {

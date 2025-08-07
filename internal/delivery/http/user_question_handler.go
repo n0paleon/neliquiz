@@ -22,19 +22,24 @@ func (h *UserQuestionHandler) GetRandomQuestion(c *fiber.Ctx) error {
 }
 
 func (h *UserQuestionHandler) CheckAnswer(c *fiber.Ctx) error {
+	questionID := c.Params("id", "")
+	if questionID == "" {
+		return response.ErrorResponse(c, 400, "questionID is required!")
+	}
+
 	input, err := response.ParseAndValidate[dto.PostVerifyAnswerRequest](c)
 	if err != nil {
 		return nil
 	}
 
-	correct, optionData, err := h.questionUseCase.CheckAnswer(input.QuestionID, input.OptionID)
+	correct, optionData, explanationURL, err := h.questionUseCase.CheckAnswer(questionID, input.SelectedOptionID)
 	if err != nil {
-		return response.ErrorResponse(c, 400, err.Error())
+		return err
 	}
 
 	responseData := dto.PostVerifyAnswerResponse{
-		Correct:     correct,
-		Explanation: "",
+		Correct:        correct,
+		ExplanationURL: explanationURL,
 	}
 	if correct {
 		responseData.CorrectOption = dto.QuizOption{

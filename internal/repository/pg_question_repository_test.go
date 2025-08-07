@@ -1,3 +1,6 @@
+//go:build integration
+// +build integration
+
 package repository
 
 import (
@@ -27,6 +30,7 @@ func TestPGQuestionRepository(t *testing.T) {
 		result, err := questionRepo.Create(&payload)
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
+		assert.Equal(t, result.Hit, 0)
 		assert.Equal(t, payload.Content, result.Content)
 
 		questionID = result.ID

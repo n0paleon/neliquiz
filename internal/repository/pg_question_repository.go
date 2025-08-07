@@ -4,9 +4,11 @@ import (
 	"NeliQuiz/internal/domain/entities"
 	"NeliQuiz/internal/errorx"
 	"NeliQuiz/internal/repository/schema"
+	"crypto/rand"
 	"errors"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
+	"math/big"
 )
 
 type PGQuestionRepository struct {
@@ -24,8 +26,11 @@ func (r *PGQuestionRepository) Create(q *entities.Question) (*entities.Question,
 
 func (r *PGQuestionRepository) FindById(id string) (*entities.Question, error) {
 	var result schema.Question
-	if err := r.db.Preload("Options").Where("id = ?", id).First(&result).Error; err != nil {
-		logrus.Error(err.Error())
+	if err := r.db.
+		Preload("Options").
+		Preload("Categories").
+		Where("id = ?", id).
+		First(&result).Error; err != nil {
 		return nil, TranslateGormError(err)
 	}
 	return result.ToEntity(), nil
@@ -47,21 +52,50 @@ func (r *PGQuestionRepository) DeleteById(id string) error {
 }
 
 func (r *PGQuestionRepository) GetRandom() (*entities.Question, error) {
-	var result schema.Question
-	if err := r.db.Preload("Options").Order("RANDOM()").First(&result).Error; err != nil {
+	var questions []schema.Question
+	if err := r.db.
+		Preload("Options").
+		Preload("Categories").
+		Order("updated_at ASC").
+		Limit(20).
+		Find(&questions).Error; err != nil {
 		return nil, TranslateGormError(err)
 	}
-	return result.ToEntity(), nil
+
+	n := big.NewInt(int64(len(questions)))
+	i, _ := rand.Int(rand.Reader, n)
+	selected := questions[i.Int64()]
+
+	go func() {
+		_ = r.updateHit(selected.ID)
+	}()
+
+	return selected.ToEntity(), nil
+}
+
+func (r *PGQuestionRepository) updateHit(id string) error {
+	err := r.db.Model(schema.Question{}).
+		Where("id = ?", id).
+		UpdateColumn("hit", gorm.Expr("hit + 1")).
+		Error
+
+	return TranslateGormError(err)
 }
 
 func (r *PGQuestionRepository) PaginateQuestions(page, limit int) ([]entities.Question, int64, error) {
 	var questions []schema.Question
 	var total int64
 
-	r.db.Model(&schema.Question{}).Order("created_at ASC").Count(&total)
+	r.db.Model(&schema.Question{}).Count(&total)
 
 	offset := (page - 1) * limit
-	if err := r.db.Limit(limit).Offset(offset).Find(&questions).Error; err != nil {
+	if err := r.db.
+		Preload("Categories").
+		Preload("Options").
+		Limit(limit).
+		Offset(offset).
+		Order("created_at ASC").
+		Find(&questions).Error; err != nil {
 		return nil, 0, TranslateGormError(err)
 	}
 
