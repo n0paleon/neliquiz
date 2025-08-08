@@ -20,26 +20,33 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd ~/app
-            git pull origin main
+            set -e
 
+            cd ~/app
+            git fetch origin main
+            git reset --hard origin/main
+
+            # (Opsional) Build binary di host
             /usr/bin/env CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o app cmd/api/main.go
 
-            podman build -t neliquiz:latest .
-
+            # Hapus image lama untuk jamin build fresh
             podman stop neliquiz || true
             podman rm neliquiz || true
+            podman rmi neliquiz:latest || true
+
+            # Build image tanpa cache
+            podman build --no-cache -t neliquiz:latest .
 
             podman run -d --name neliquiz -p 5080:${{ vars.HTTP_PORT }} \
-              -e DB_HOST=${{ secrets.DB_HOST }} \
-              -e DB_NAME=${{ secrets.DB_NAME }} \
-              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-              -e DB_PORT=${{ secrets.DB_PORT }} \
-              -e DB_USER=${{ secrets.DB_USER }} \
-              -e DB_SSLMODE=${{ secrets.DB_SSLMODE }} \
-              -e HTTP_HOST=${{ vars.HTTP_HOST }} \
-              -e HTTP_PORT=${{ vars.HTTP_PORT }} \
-              -e HTTP_PREFORK=${{ vars.HTTP_PREFORK }} \
-              -e VALIDATE_API_GATEWAY=${{ vars.VALIDATE_API_GATEWAY }} \
-              -e API_GATEWAY_TOKEN=${{ vars.API_GATEWAY_TOKEN }} \
+              -e DB_HOST='${{ secrets.DB_HOST }}' \
+              -e DB_NAME='${{ secrets.DB_NAME }}' \
+              -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
+              -e DB_PORT='${{ secrets.DB_PORT }}' \
+              -e DB_USER='${{ secrets.DB_USER }}' \
+              -e DB_SSLMODE='${{ secrets.DB_SSLMODE }}' \
+              -e HTTP_HOST='${{ vars.HTTP_HOST }}' \
+              -e HTTP_PORT='${{ vars.HTTP_PORT }}' \
+              -e HTTP_PREFORK='${{ vars.HTTP_PREFORK }}' \
+              -e VALIDATE_API_GATEWAY='${{ vars.VALIDATE_API_GATEWAY }}' \
+              -e API_GATEWAY_TOKEN='${{ vars.API_GATEWAY_TOKEN }}' \
               neliquiz:latest
