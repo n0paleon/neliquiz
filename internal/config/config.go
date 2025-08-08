@@ -17,18 +17,20 @@ var (
 
 // Config holds all app config values.
 type Config struct {
-	DBUser            string
-	DBPassword        string
-	DBHost            string
-	DBPort            string
-	DBName            string
-	DBSSLMode         string
-	DBMaxIdleConn     int
-	DBMaxOpenConn     int
-	DBMaxConnLifetime int
-	HTTPHost          string
-	HTTPPort          string
-	HTTPPrefork       bool
+	DBUser             string
+	DBPassword         string
+	DBHost             string
+	DBPort             string
+	DBName             string
+	DBSSLMode          string
+	DBMaxIdleConn      int
+	DBMaxOpenConn      int
+	DBMaxConnLifetime  int
+	HTTPHost           string
+	HTTPPort           string
+	HTTPPrefork        bool
+	ValidateApiGateway bool
+	ApiGatewayToken    string
 }
 
 // New initializes the config.
@@ -37,18 +39,20 @@ func New() *Config {
 		loadDotEnvIfExists()
 
 		config = &Config{
-			DBUser:            GetEnv("DB_USER", "postgres"),
-			DBPassword:        GetEnv("DB_PASSWORD", "postgres"),
-			DBHost:            GetEnv("DB_HOST", "localhost"),
-			DBPort:            GetEnv("DB_PORT", "5432"),
-			DBName:            GetEnv("DB_NAME", "postgres"),
-			DBSSLMode:         GetEnv("DB_SSLMODE", "disable"),
-			DBMaxIdleConn:     GetEnvAsInt("DB_MAX_IDLE_CONN", 2),
-			DBMaxOpenConn:     GetEnvAsInt("DB_MAX_OPEN_CONN", 5),
-			DBMaxConnLifetime: GetEnvAsInt("DB_MAX_CONN_LIFETIME", 60),
-			HTTPHost:          GetEnv("HTTP_HOST", "0.0.0.0"),
-			HTTPPort:          GetEnv("HTTP_PORT", "3000"),
-			HTTPPrefork:       GetEnvAsBool("HTTP_PREFORK", false),
+			DBUser:             GetEnv("DB_USER", "postgres"),
+			DBPassword:         GetEnv("DB_PASSWORD", "postgres"),
+			DBHost:             GetEnv("DB_HOST", "localhost"),
+			DBPort:             GetEnv("DB_PORT", "5432"),
+			DBName:             GetEnv("DB_NAME", "postgres"),
+			DBSSLMode:          GetEnv("DB_SSLMODE", "disable"),
+			DBMaxIdleConn:      GetEnvAsInt("DB_MAX_IDLE_CONN", 2),
+			DBMaxOpenConn:      GetEnvAsInt("DB_MAX_OPEN_CONN", 5),
+			DBMaxConnLifetime:  GetEnvAsInt("DB_MAX_CONN_LIFETIME", 60),
+			HTTPHost:           GetEnv("HTTP_HOST", "0.0.0.0"),
+			HTTPPort:           GetEnv("HTTP_PORT", "3000"),
+			HTTPPrefork:        GetEnvAsBool("HTTP_PREFORK", false),
+			ValidateApiGateway: GetEnvAsBool("VALIDATE_API_GATEWAY", false),
+			ApiGatewayToken:    GetEnv("API_GATEWAY_TOKEN", ""),
 		}
 	})
 
