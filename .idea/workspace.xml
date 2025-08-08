@@ -46,7 +46,6 @@
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/config.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/initiator.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/visit.go" beforeDir="false" />
