@@ -21,7 +21,9 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             set -e
-
+            
+            git config --global --add safe.directory /home/${USER}/app
+            
             cd ~/app
             git fetch origin main
             git reset --hard origin/main
