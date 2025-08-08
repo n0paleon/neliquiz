@@ -28,9 +28,6 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            # (Opsional) Build binary di host
-            /usr/bin/env CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o app cmd/api/main.go
-
             # Hapus image lama untuk jamin build fresh
             podman stop neliquiz || true
             podman rm neliquiz || true
