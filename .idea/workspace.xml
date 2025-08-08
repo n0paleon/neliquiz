@@ -5,16 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7392c3e4-310d-4db0-a866-82d05387307b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.air.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.env.test" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/delivery/http/dto/category.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/category.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/entities/category.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/domain/entities/category_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/mocks/category_repository_mock.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/pg_category_repository.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/pg_category_repository_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/repository/schema/category_schema.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/api/main.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/scheduler/main.go" afterDir="false" />
@@ -56,30 +46,10 @@
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/config.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.test" beforeDir="false" afterPath="$PROJECT_DIR$/.env.test" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/delivery/http/admin_question_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/admin_question_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/delivery/http/dto/question.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/dto/question.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/delivery/http/dto/quiz.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/dto/quiz.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/entities/question.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/entities/question.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/entities/question_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/entities/question_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/question.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/question.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/infrastructures/webserver/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/schema/question_schema.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/schema/question_schema.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_question_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/admin_question_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_question_usecase_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/admin_question_usecase_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/usecase/user_question_usecase_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/20250719164715_create_table_questions.down.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20250719164715_create_table_questions.down.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/20250719164715_create_table_questions.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20250719164715_create_table_questions.up.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/20250720091325_create_table_question_options.down.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/20250720091325_create_table_question_options.up.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/initiator.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/visit.go" beforeDir="false" />

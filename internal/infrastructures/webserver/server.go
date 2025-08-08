@@ -42,6 +42,9 @@ func NewServer(cfg *config.Config) *Server {
 		EnablePrintRoutes: true,
 	})
 
+	if cfg.ValidateApiGateway {
+		app.Use(ApiGatewayAuthMiddleware(cfg.ApiGatewayToken))
+	}
 	app.Use(recover2.New())
 
 	return &Server{app: app}
@@ -57,6 +60,20 @@ func (s *Server) Shutdown() error {
 
 func (s *Server) ShutdownWithContext(ctx context.Context) error {
 	return s.app.ShutdownWithContext(ctx)
+}
+
+func ApiGatewayAuthMiddleware(secretToken string) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		token := c.Get("X-Api-Gateway-Token", "")
+		if token == "" || token != secretToken {
+			// block connection
+			_ = c.Context().Conn().Close()
+			return nil
+		}
+
+		// continue to next route
+		return c.Next()
+	}
 }
 
 func ErrorHandler(c *fiber.Ctx, err error) error {

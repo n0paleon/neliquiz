@@ -40,4 +40,6 @@ jobs:
               -e HTTP_HOST=${{ vars.HTTP_HOST }} \
               -e HTTP_PORT=${{ vars.HTTP_PORT }} \
               -e HTTP_PREFORK=${{ vars.HTTP_PREFORK }} \
+              -e VALIDATE_API_GATEWAY=${{ vars.VALIDATE_API_GATEWAY }} \
+              -e API_GATEWAY_TOKEN=${{ vars.API_GATEWAY_TOKEN }} \
               neliquiz:latest
