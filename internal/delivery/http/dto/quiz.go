@@ -40,7 +40,7 @@ func EntityToGetRandomQuestionResponse(q *entities.Question) *GetRandomQuestionR
 }
 
 type PostVerifyAnswerRequest struct {
-	SelectedOptionID string `json:"selected_option_id" validate:"required,min=1,max=1000,uuid"`
+	SelectedOptionID string `json:"selected_option_id" validate:"required"`
 }
 
 type PostVerifyAnswerResponse struct {

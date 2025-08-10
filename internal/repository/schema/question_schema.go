@@ -2,18 +2,47 @@ package schema
 
 import (
 	"NeliQuiz/internal/domain/entities"
+	"NeliQuiz/pkg/utils"
+	"database/sql/driver"
+	"fmt"
+	"github.com/bytedance/sonic"
+	"gorm.io/gorm"
 	"time"
 )
 
 type Question struct {
-	ID             string `gorm:"type:uuid;primary_key;default:uuid_generate_v4()"`
+	ID             string `gorm:"primaryKey;type:char(26)"`
 	Content        string
 	Hit            int
-	Options        []Option   `gorm:"foreignKey:QuestionID"`
+	Options        Options    `gorm:"type:jsonb;default:'[]'"`
 	Categories     []Category `gorm:"many2many:question_categories"`
 	ExplanationURL string
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
+}
+
+func (s *Question) BeforeCreate(tx *gorm.DB) (err error) {
+	s.ID = utils.GenerateULID()
+
+	for i, _ := range s.Options {
+		s.Options[i].ID = utils.GenerateULID()
+	}
+
+	return
+}
+
+func (s *Question) BeforeUpdate(tx *gorm.DB) (err error) {
+	if s.ID == "" {
+		s.ID = utils.GenerateULID()
+	}
+
+	for i, opt := range s.Options {
+		if opt.ID == "" {
+			s.Options[i].ID = utils.GenerateULID()
+		}
+	}
+
+	return nil
 }
 
 func (s *Question) TableName() string {
@@ -24,10 +53,9 @@ func (s *Question) ToEntity() *entities.Question {
 	options := make([]entities.Option, len(s.Options))
 	for i, option := range s.Options {
 		options[i] = entities.Option{
-			ID:         option.ID,
-			QuestionID: option.QuestionID,
-			Content:    option.Content,
-			IsCorrect:  option.IsCorrect,
+			ID:        option.ID,
+			Content:   option.Content,
+			IsCorrect: option.IsCorrect,
 		}
 	}
 
@@ -49,13 +77,12 @@ func (s *Question) ToEntity() *entities.Question {
 }
 
 func ToQuestionSchema(q *entities.Question) *Question {
-	options := make([]Option, len(q.Options))
+	options := make(Options, len(q.Options))
 	for i, option := range q.Options {
-		options[i] = Option{
-			ID:         option.ID,
-			QuestionID: option.QuestionID,
-			Content:    option.Content,
-			IsCorrect:  option.IsCorrect,
+		options[i] = entities.Option{
+			ID:        option.ID,
+			Content:   option.Content,
+			IsCorrect: option.IsCorrect,
 		}
 	}
 
@@ -74,4 +101,18 @@ func ToQuestionSchema(q *entities.Question) *Question {
 		CreatedAt:      q.CreatedAt,
 		UpdatedAt:      q.UpdatedAt,
 	}
+}
+
+type Options []entities.Option
+
+func (o Options) Value() (driver.Value, error) {
+	return sonic.Marshal(o)
+}
+
+func (o *Options) Scan(value interface{}) error {
+	bytes, ok := value.([]byte)
+	if !ok {
+		return fmt.Errorf("failed to unmarshal JSONB value: %v", value)
+	}
+	return sonic.Unmarshal(bytes, o)
 }

@@ -6,9 +6,11 @@ import (
 	"NeliQuiz/internal/repository/schema"
 	"crypto/rand"
 	"errors"
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 	"math/big"
+	"time"
 )
 
 type PGQuestionRepository struct {
@@ -17,7 +19,18 @@ type PGQuestionRepository struct {
 
 func (r *PGQuestionRepository) Create(q *entities.Question) (*entities.Question, error) {
 	model := schema.ToQuestionSchema(q)
-	if err := r.db.Create(model).Error; err != nil {
+
+	// load existing categories untuk menghindari data terduplikat
+	categories := make([]schema.Category, len(q.Categories))
+	for i, category := range q.Categories {
+		categories[i] = schema.Category{
+			Schema: schema.Schema{ID: category.ID},
+			Name:   category.Name,
+		}
+	}
+	model.Categories = categories
+
+	if err := r.db.Omit("Categories.*").Create(model).Error; err != nil {
 		logrus.Error(err.Error())
 		return nil, TranslateGormError(err)
 	}
@@ -27,7 +40,6 @@ func (r *PGQuestionRepository) Create(q *entities.Question) (*entities.Question,
 func (r *PGQuestionRepository) FindById(id string) (*entities.Question, error) {
 	var result schema.Question
 	if err := r.db.
-		Preload("Options").
 		Preload("Categories").
 		Where("id = ?", id).
 		First(&result).Error; err != nil {
@@ -54,7 +66,6 @@ func (r *PGQuestionRepository) DeleteById(id string) error {
 func (r *PGQuestionRepository) GetRandom() (*entities.Question, error) {
 	var questions []schema.Question
 	if err := r.db.
-		Preload("Options").
 		Preload("Categories").
 		Order("updated_at ASC").
 		Limit(20).
@@ -82,19 +93,20 @@ func (r *PGQuestionRepository) updateHit(id string) error {
 	return TranslateGormError(err)
 }
 
-func (r *PGQuestionRepository) PaginateQuestions(page, limit int) ([]entities.Question, int64, error) {
+func (r *PGQuestionRepository) PaginateQuestions(page, limit int, sortBy, order string) ([]entities.Question, int64, error) {
 	var questions []schema.Question
 	var total int64
+
+	sortBy, order = sanitizeSort(sortBy, order)
 
 	r.db.Model(&schema.Question{}).Count(&total)
 
 	offset := (page - 1) * limit
 	if err := r.db.
 		Preload("Categories").
-		Preload("Options").
 		Limit(limit).
 		Offset(offset).
-		Order("created_at ASC").
+		Order(fmt.Sprintf("%s %s", sortBy, order)).
 		Find(&questions).Error; err != nil {
 		return nil, 0, TranslateGormError(err)
 	}
@@ -105,6 +117,74 @@ func (r *PGQuestionRepository) PaginateQuestions(page, limit int) ([]entities.Qu
 	}
 
 	return results, total, nil
+}
+
+func (r *PGQuestionRepository) PaginateQuestionsByCategory(categoryID string, page, limit int, sortBy, order string) ([]entities.Question, int64, error) {
+	var questions []schema.Question
+	var total int64
+
+	sortBy, order = sanitizeSort(sortBy, order)
+
+	query := r.db.Model(&schema.Question{}).
+		Joins("JOIN question_categories qc ON qc.question_id = questions.id").
+		Where("qc.category_id = ?", categoryID).
+		Preload("Categories").
+		Group("questions.id")
+
+	query.Count(&total)
+
+	offset := (page - 1) * limit
+	if err := query.
+		Limit(limit).
+		Offset(offset).
+		Order(fmt.Sprintf("%s %s", sortBy, order)).
+		Find(&questions).Error; err != nil {
+		return nil, 0, TranslateGormError(err)
+	}
+
+	results := make([]entities.Question, len(questions))
+	for i, question := range questions {
+		results[i] = *question.ToEntity()
+	}
+	return results, total, nil
+}
+
+func (r *PGQuestionRepository) Update(q *entities.Question) (*entities.Question, error) {
+	var existing schema.Question
+	if err := r.db.First(&existing, "id = ?", q.ID).Error; err != nil {
+		return nil, TranslateGormError(err)
+	}
+
+	// update kolom biasa
+	existing.Content = q.Content
+	existing.Hit = q.Hit
+	existing.Options = q.Options
+	existing.ExplanationURL = q.ExplanationURL
+	existing.UpdatedAt = time.Now()
+	if err := r.db.Model(&schema.Question{ID: q.ID}).Updates(existing).Error; err != nil {
+		return nil, TranslateGormError(err)
+	}
+
+	newCategories := make([]schema.Category, len(q.Categories))
+	for i, cat := range q.Categories {
+		newCategories[i] = schema.Category{
+			Schema: schema.Schema{ID: cat.ID},
+			Name:   cat.Name,
+		}
+	}
+
+	if err := r.db.Model(&schema.Question{ID: q.ID}).
+		Association("Categories").
+		Replace(newCategories); err != nil {
+		return nil, TranslateGormError(err)
+	}
+
+	var finalResult schema.Question
+	if err := r.db.Preload("Categories").First(&finalResult, "id = ?", q.ID).Error; err != nil {
+		return nil, TranslateGormError(err)
+	}
+
+	return finalResult.ToEntity(), nil
 }
 
 func NewPGQuestionRepository(db *gorm.DB) *PGQuestionRepository {

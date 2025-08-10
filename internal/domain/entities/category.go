@@ -6,8 +6,8 @@ import (
 )
 
 type Category struct {
-	ID   string
-	Name string
+	ID   string `json:"id"`
+	Name string `json:"name"`
 }
 
 var validCategoryName = regexp.MustCompile(`^[a-zA-Z0-9 ]+$`)

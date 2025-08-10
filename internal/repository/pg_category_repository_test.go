@@ -1,3 +1,6 @@
+//go:build integration
+// +build integration
+
 package repository
 
 import (
@@ -7,7 +10,7 @@ import (
 	"testing"
 )
 
-func TestPGCategoryRepository_FindOrCreateCategoryByName(t *testing.T) {
+func TestPGCategoryRepository(t *testing.T) {
 	cfg := config.New()
 	db := testhelper.NewTestDBConnection(t, cfg)
 	categoryRepo := NewPGCategoryRepository(db)
@@ -23,5 +26,18 @@ func TestPGCategoryRepository_FindOrCreateCategoryByName(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, category)
 		assert.Equal(t, categoryName, category.Name)
+	})
+
+	t.Run("should find category by name correctly", func(t *testing.T) {
+		category, err := categoryRepo.FindCategoryByName(categoryName)
+		assert.NoError(t, err)
+		assert.NotNil(t, category)
+		assert.Equal(t, categoryName, category.Name)
+	})
+
+	t.Run("should FindAll categories correctly", func(t *testing.T) {
+		categories, err := categoryRepo.FindAll()
+		assert.NoError(t, err)
+		assert.Greater(t, len(categories), 0)
 	})
 }

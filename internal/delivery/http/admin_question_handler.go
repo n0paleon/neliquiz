@@ -23,16 +23,22 @@ func (h *AdminQuestionHandler) PostCreateQuestion(c *fiber.Ctx) error {
 		return response.ErrorResponse(c, fiber.StatusBadRequest, err.Error())
 	}
 
-	if err := h.questionUseCase.CreateQuestion(question); err != nil {
-		return response.ErrorResponse(c, fiber.StatusBadRequest, err.Error())
+	result, err := h.questionUseCase.CreateQuestion(question)
+	if err != nil {
+		return err
 	}
 
-	return response.SuccessResponse(c, "question saved!")
+	return response.SuccessResponse(c, &fiber.Map{
+		"question_id": result.ID,
+	})
 }
 
 func (h *AdminQuestionHandler) GetListQuestions(c *fiber.Ctx) error {
 	pageQuery := c.Query("page", "1")
 	limitQuery := c.Query("limit", "10")
+	category := c.Query("category", "")
+	sortyBy := c.Query("sort", "created_at")
+	order := c.Query("order", "desc")
 
 	page, err := strconv.Atoi(pageQuery)
 	if err != nil {
@@ -43,9 +49,9 @@ func (h *AdminQuestionHandler) GetListQuestions(c *fiber.Ctx) error {
 		return response.ErrorResponse(c, fiber.StatusBadRequest, "invalid page limit number")
 	}
 
-	results, total, err := h.questionUseCase.GetListQuestions(page, limit)
+	results, total, err := h.questionUseCase.GetListQuestions(category, page, limit, sortyBy, order)
 	if err != nil {
-		return response.ErrorResponse(c, fiber.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	questions := make([]dto.GetListQuestionsResponse, len(results))
@@ -96,11 +102,33 @@ func (h *AdminQuestionHandler) GetQuestionDetail(c *fiber.Ctx) error {
 
 	question, err := h.questionUseCase.GetQuestionDetail(questionID)
 	if err != nil {
-		return response.ErrorResponse(c, fiber.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	responseData := dto.EntityToGetQuestionDetailResponse(question)
 	return response.SuccessResponse(c, responseData)
+}
+
+func (h *AdminQuestionHandler) PutQuestion(c *fiber.Ctx) error {
+	questionID := c.Params("id", "")
+	if questionID == "" {
+		return response.ErrorResponse(c, fiber.StatusBadRequest, "invalid question id")
+	}
+
+	payload, err := response.ParseAndValidate[dto.PutQuestionDetailRequest](c)
+	if err != nil {
+		return nil
+	}
+
+	data := payload.ToEntity()
+	data.ID = questionID
+
+	newData, err := h.questionUseCase.UpdateQuestion(data)
+	if err != nil {
+		return err
+	}
+
+	return response.SuccessResponse(c, newData)
 }
 
 func NewAdminQuestionHandler(questionUseCase domain.AdminQuestionUseCase) *AdminQuestionHandler {
