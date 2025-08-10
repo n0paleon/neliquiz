@@ -7,14 +7,20 @@ import (
 )
 
 type Question struct {
-	ID             string
-	Content        string
-	Hit            int
-	Options        []Option
-	Categories     []Category
-	ExplanationURL string
-	CreatedAt      time.Time
-	UpdatedAt      time.Time
+	ID             string     `json:"id"`
+	Content        string     `json:"content"`
+	Hit            int        `json:"hit"`
+	Options        []Option   `json:"options"`
+	Categories     []Category `json:"categories"`
+	ExplanationURL string     `json:"explanation_url"`
+	CreatedAt      time.Time  `json:"created_at"`
+	UpdatedAt      time.Time  `json:"updated_at"`
+}
+
+type Option struct {
+	ID        string `json:"id"`
+	Content   string `json:"content"`
+	IsCorrect bool   `json:"is_correct"`
 }
 
 func NewQuestion(content, explanationURL string) (*Question, error) {

@@ -5,6 +5,7 @@ import (
 	"NeliQuiz/internal/domain/entities"
 	"NeliQuiz/internal/errorx"
 	"errors"
+	"github.com/sirupsen/logrus"
 )
 
 type AdminQuestionUseCase struct {
@@ -12,32 +13,26 @@ type AdminQuestionUseCase struct {
 	categoryRepo domain.CategoryRepository
 }
 
-func (u *AdminQuestionUseCase) CreateQuestion(q *entities.Question) error {
-	for i, cat := range q.Categories {
-		if err := cat.Validate(); err != nil {
-			return err
-		}
-		newCat, err := u.categoryRepo.FindOrCreateCategoryByName(cat.Name)
-		if err != nil {
-			return err
-		}
-		q.Categories[i] = *newCat
+func (u *AdminQuestionUseCase) CreateQuestion(q *entities.Question) (*entities.Question, error) {
+	categories, err := u.categoryRepo.FindOrCreateBatch(q.Categories)
+	if err != nil {
+		return nil, err
+	}
+	q.Categories = categories
+
+	if err = q.Validate(); err != nil {
+		return nil, err
 	}
 
-	if err := q.Validate(); err != nil {
-		return err
-	}
-	_, err := u.questionRepo.Create(q)
+	result, err := u.questionRepo.Create(q)
 	if err != nil {
-		return errorx.InternalError(err)
+		return nil, errorx.InternalError(err)
 	}
-	return nil
+
+	return result, nil
 }
 
-func (u *AdminQuestionUseCase) GetListQuestions(page, limit int) ([]entities.Question, int64, error) {
-	var results []entities.Question
-	var total int64
-
+func (u *AdminQuestionUseCase) GetListQuestions(categoryName string, page, limit int, sortBy, order string) (results []entities.Question, total int64, err error) {
 	if page <= 0 {
 		page = 1
 	}
@@ -45,12 +40,19 @@ func (u *AdminQuestionUseCase) GetListQuestions(page, limit int) ([]entities.Que
 		limit = 10
 	}
 
-	results, total, err := u.questionRepo.PaginateQuestions(page, limit)
-	if err != nil {
-		return results, total, err
+	if categoryName != "" {
+		var category *entities.Category
+		category, err = u.categoryRepo.FindCategoryByName(categoryName)
+		if err != nil {
+			err = errorx.NotFound("category not found")
+			return
+		}
+		results, total, err = u.questionRepo.PaginateQuestionsByCategory(category.ID, page, limit, sortBy, order)
+		return
 	}
 
-	return results, total, nil
+	results, total, err = u.questionRepo.PaginateQuestions(page, limit, sortBy, order)
+	return
 }
 
 func (u *AdminQuestionUseCase) DeleteQuestion(id string) error {
@@ -63,10 +65,34 @@ func (u *AdminQuestionUseCase) DeleteQuestion(id string) error {
 
 func (u *AdminQuestionUseCase) GetQuestionDetail(id string) (*entities.Question, error) {
 	if id == "" {
-		return nil, errors.New("invalid question id")
+		return nil, errorx.NotFound("question not found")
 	}
 
 	return u.questionRepo.FindById(id)
+}
+
+func (u *AdminQuestionUseCase) UpdateQuestion(q *entities.Question) (*entities.Question, error) {
+	if q.ID == "" {
+		return nil, errorx.NotFound("question not found")
+	}
+
+	categories, err := u.categoryRepo.FindOrCreateBatch(q.Categories)
+	if err != nil {
+		logrus.Error(err.Error())
+		return nil, err
+	}
+	q.Categories = categories
+
+	if err = q.Validate(); err != nil {
+		return nil, errorx.BadRequest(err.Error())
+	}
+
+	newQuestionData, err := u.questionRepo.Update(q)
+	if err != nil {
+		return nil, err
+	}
+
+	return newQuestionData, nil
 }
 
 func NewAdminQuestionUseCase(questionRepository domain.QuestionRepository, categoryRepository domain.CategoryRepository) *AdminQuestionUseCase {

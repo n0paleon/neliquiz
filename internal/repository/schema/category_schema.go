@@ -3,7 +3,7 @@ package schema
 import "NeliQuiz/internal/domain/entities"
 
 type Category struct {
-	ID   string `gorm:"type:uuid;primary_key;default:uuid_generate_v4();primary_key"`
+	Schema
 	Name string `gorm:"unique;not null"`
 }
 
@@ -20,7 +20,9 @@ func (s *Category) ToEntity() *entities.Category {
 
 func ToCategorySchema(e *entities.Category) *Category {
 	return &Category{
-		ID:   e.ID,
+		Schema: Schema{
+			ID: e.ID,
+		},
 		Name: e.Name,
 	}
 }

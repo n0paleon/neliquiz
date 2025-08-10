@@ -50,7 +50,9 @@ func TestQuestion(t *testing.T) {
 		assert.NotNil(t, question)
 
 		contentOpt := "1945"
-		option, err := NewOption(contentOpt, true)
+		option := Option{
+			Content: contentOpt,
+		}
 		assert.NoError(t, err)
 		assert.NotNil(t, option)
 

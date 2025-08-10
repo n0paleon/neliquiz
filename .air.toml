@@ -23,21 +23,3 @@ exclude_file = ["**/*_test.go"]
 time = true
 color = true
 level = "debug"
-
-# === [ ENV CONFIG ] ===
-[env]
-# POSTGRES
-DB_USER="developer"
-DB_PASSWORD="developerganteng"
-DB_HOST="localhost"
-DB_PORT=5432
-DB_NAME="neliquiz_dev"
-DB_SSLMODE="disable"
-DB_MAX_IDLE_CONN=10
-DB_MAX_OPEN_CONN=100
-DB_MAX_CONN_LIFETIME=300
-
-# WEBSERVER
-HTTP_HOST="localhost"
-HTTP_PORT=3000
-HTTP_PREFORK=false

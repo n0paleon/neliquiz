@@ -14,7 +14,7 @@ type UserQuestionHandler struct {
 func (h *UserQuestionHandler) GetRandomQuestion(c *fiber.Ctx) error {
 	question, err := h.questionUseCase.GetRandomQuestion()
 	if err != nil {
-		return response.ErrorResponse(c, 500, err.Error())
+		return err
 	}
 
 	result := dto.EntityToGetRandomQuestionResponse(question)

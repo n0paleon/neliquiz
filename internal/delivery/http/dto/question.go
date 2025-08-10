@@ -9,7 +9,7 @@ type CreateQuestionRequest struct {
 	Content        string   `json:"content" validate:"required,min=1,max=1000"`
 	Options        []Option `json:"options" validate:"required,dive"`
 	Categories     []string `json:"categories"`
-	ExplanationURL string   `json:"explanation_url" validate:"url"`
+	ExplanationURL string   `json:"explanation_url" validate:"omitempty,url"`
 }
 
 type Option struct {
@@ -99,4 +99,46 @@ func EntityToGetQuestionDetailResponse(e *entities.Question) *GetQuestionDetailR
 		CreatedAt:      e.CreatedAt,
 		UpdatedAt:      e.UpdatedAt,
 	}
+}
+
+type PutQuestionDetailRequest struct {
+	Content        string                            `json:"content" validate:"min=1,max=1000"`
+	Hit            int                               `json:"hit" validate:"omitempty,numeric"`
+	Options        []PutQuestionDetailOptionsRequest `json:"options" validate:"required,dive"`
+	Categories     []string                          `json:"categories"`
+	ExplanationURL string                            `json:"explanation_url" validate:"omitempty,url"`
+}
+
+type PutQuestionDetailOptionsRequest struct {
+	ID        string `json:"id" validate:"max=100"`
+	Content   string `json:"content" validate:"min=1,max=1000"`
+	IsCorrect bool   `json:"is_correct"`
+}
+
+func (r *PutQuestionDetailRequest) ToEntity() *entities.Question {
+	q := &entities.Question{
+		Content:        r.Content,
+		Hit:            r.Hit,
+		ExplanationURL: r.ExplanationURL,
+	}
+
+	options := make([]entities.Option, len(r.Options))
+	for i, opt := range r.Options {
+		options[i] = entities.Option{
+			ID:        opt.ID,
+			Content:   opt.Content,
+			IsCorrect: opt.IsCorrect,
+		}
+	}
+	q.Options = options
+
+	categories := make([]entities.Category, len(r.Categories))
+	for i, catName := range r.Categories {
+		categories[i] = entities.Category{
+			Name: catName,
+		}
+	}
+	q.Categories = categories
+
+	return q
 }
