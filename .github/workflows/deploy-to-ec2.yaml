@@ -48,4 +48,5 @@ jobs:
               -e HTTP_PREFORK='${{ vars.HTTP_PREFORK }}' \
               -e VALIDATE_API_GATEWAY='${{ vars.VALIDATE_API_GATEWAY }}' \
               -e API_GATEWAY_TOKEN='${{ vars.API_GATEWAY_TOKEN }}' \
+              --restart=always \
               neliquiz:latest
