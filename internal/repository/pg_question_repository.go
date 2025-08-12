@@ -68,7 +68,7 @@ func (r *PGQuestionRepository) GetRandom() (*entities.Question, error) {
 	if err := r.db.
 		Preload("Categories").
 		Order("updated_at ASC").
-		Limit(20).
+		Limit(10).
 		Find(&questions).Error; err != nil {
 		return nil, TranslateGormError(err)
 	}
@@ -88,6 +88,7 @@ func (r *PGQuestionRepository) updateHit(id string) error {
 	err := r.db.Model(schema.Question{}).
 		Where("id = ?", id).
 		UpdateColumn("hit", gorm.Expr("hit + 1")).
+		UpdateColumn("updated_at", time.Now()).
 		Error
 
 	return TranslateGormError(err)
