@@ -69,6 +69,28 @@ func (r *PGCategoryRepository) FindAll() ([]entities.Category, error) {
 	return results, nil
 }
 
+func (r *PGCategoryRepository) SearchCategoriesByName(query string, limit int) ([]entities.Category, error) {
+	if query == "" {
+		return nil, nil
+	}
+
+	var categories []schema.Category
+	if err := r.db.
+		Where("name ILIKE ?", "%"+query+"%").
+		Limit(limit).
+		Order("name ASC").
+		Find(&categories).Error; err != nil {
+		return nil, TranslateGormError(err)
+	}
+
+	results := make([]entities.Category, len(categories))
+	for i, cat := range categories {
+		results[i] = *cat.ToEntity()
+	}
+
+	return results, nil
+}
+
 func NewPGCategoryRepository(db *gorm.DB) *PGCategoryRepository {
 	return &PGCategoryRepository{
 		db: db,

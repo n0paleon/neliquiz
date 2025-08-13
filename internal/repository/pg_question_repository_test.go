@@ -314,3 +314,62 @@ func TestPGQuestionRepository_Update(t *testing.T) {
 
 	t.Logf("✅ Join table verification: %d relationships found", joinCount)
 }
+
+func TestPGQuestionRepository_GetRandomByCategories(t *testing.T) {
+	cfg := config.New()
+	db := testhelper.NewTestDBConnection(t, cfg)
+	repo := NewPGQuestionRepository(db)
+
+	t.Cleanup(func() {
+		testhelper.CleanupTable(t, db, "question_categories")
+		testhelper.CleanupTable(t, db, "categories")
+		testhelper.CleanupTable(t, db, "questions")
+	})
+
+	// 1. Buat kategori
+	catMath := schema.Category{Name: "Math"}
+	catScience := schema.Category{Name: "Science"}
+	assert.NoError(t, db.Create(&catMath).Error)
+	assert.NoError(t, db.Create(&catScience).Error)
+	assert.NotEmpty(t, catMath.ID)
+	assert.NotEmpty(t, catScience.ID)
+
+	// 2. Buat pertanyaan masing-masing kategori
+	q1 := &entities.Question{
+		Content:    "2 + 2 = ?",
+		Categories: []entities.Category{{ID: catMath.ID, Name: catMath.Name}},
+	}
+	q2 := &entities.Question{
+		Content:    "Water boils at 100C?",
+		Categories: []entities.Category{{ID: catScience.ID, Name: catScience.Name}},
+	}
+	_, err := repo.Create(q1)
+	assert.NoError(t, err)
+	_, err = repo.Create(q2)
+	assert.NoError(t, err)
+
+	// 3. Panggil GetRandomByCategories dengan satu kategori Math
+	randomQuestion, err := repo.GetRandomByCategoryNames([]string{catMath.Name})
+	assert.NoError(t, err)
+	assert.NotNil(t, randomQuestion)
+	assert.Equal(t, "2 + 2 = ?", randomQuestion.Content)
+	assert.Len(t, randomQuestion.Categories, 1)
+	assert.Equal(t, "Math", randomQuestion.Categories[0].Name)
+
+	// 4. Panggil GetRandomByCategories dengan dua kategori
+	randomQuestionMulti, err := repo.GetRandomByCategoryNames([]string{
+		catMath.Name,
+		catScience.Name,
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, randomQuestionMulti)
+	assert.Contains(t, []string{"2 + 2 = ?", "Water boils at 100C?"}, randomQuestionMulti.Content)
+
+	// 5. Pastikan error jika kategori invalid / kosong
+	_, err = repo.GetRandomByCategoryNames([]string{})
+	assert.Error(t, err)
+
+	// 6. Pastikan error jika tidak ada pertanyaan sesuai kategori
+	_, err = repo.GetRandomByCategoryNames([]string{"invalid-category-name"})
+	assert.Error(t, err)
+}

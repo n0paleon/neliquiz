@@ -47,6 +47,19 @@
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/admin_category_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/admin_category_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/category.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/category.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/question.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/question.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/mocks/category_repository_mock.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/mocks/category_repository_mock.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/mocks/question_repository_mock.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/mocks/question_repository_mock.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_category_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_category_repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_category_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_category_repository_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_category_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/admin_category_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_category_usecase_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/admin_category_usecase_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/initiator.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/visit.go" beforeDir="false" />

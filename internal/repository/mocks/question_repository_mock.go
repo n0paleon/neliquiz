@@ -55,3 +55,11 @@ func (m *QuestionRepositoryMock) Update(q *entities.Question) (*entities.Questio
 	}
 	return args.Get(0).(*entities.Question), args.Error(1)
 }
+
+func (m *QuestionRepositoryMock) GetRandomByCategoryNames(names []string) (*entities.Question, error) {
+	args := m.Called(names)
+	if args.Get(0) == nil || len(args.Get(0).([]string)) < 1 {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).(*entities.Question), args.Error(1)
+}

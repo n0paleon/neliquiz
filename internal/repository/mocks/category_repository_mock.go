@@ -28,3 +28,8 @@ func (m *CategoryRepositoryMock) FindAll() ([]entities.Category, error) {
 	args := m.Called()
 	return args.Get(0).([]entities.Category), args.Error(1)
 }
+
+func (m *CategoryRepositoryMock) SearchCategoriesByName(query string, limit int) ([]entities.Category, error) {
+	args := m.Called(query, limit)
+	return args.Get(0).([]entities.Category), args.Error(1)
+}
