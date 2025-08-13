@@ -11,7 +11,7 @@ type AdminQuestionUseCase interface {
 }
 
 type UserQuestionUseCase interface {
-	GetRandomQuestion() (*entities.Question, error)
+	GetRandomQuestion(categories ...string) (*entities.Question, error)
 	CheckAnswer(questionID, selectedQuestionID string) (isCorrect bool, option *entities.Option, explanationURL string, err error)
 }
 
@@ -23,4 +23,5 @@ type QuestionRepository interface {
 	PaginateQuestions(page, limit int, sortBy, order string) ([]entities.Question, int64, error)
 	PaginateQuestionsByCategory(categoryID string, page, limit int, sortBy, order string) ([]entities.Question, int64, error)
 	Update(q *entities.Question) (*entities.Question, error)
+	GetRandomByCategoryNames(names []string) (*entities.Question, error)
 }

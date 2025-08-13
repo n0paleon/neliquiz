@@ -7,8 +7,9 @@ type CategoryRepository interface {
 	FindOrCreateCategoryByName(name string) (*entities.Category, error)
 	FindCategoryByName(name string) (*entities.Category, error)
 	FindAll() ([]entities.Category, error)
+	SearchCategoriesByName(query string, limit int) ([]entities.Category, error)
 }
 
 type AdminCategoryUseCase interface {
-	GetListCategories() ([]entities.Category, error)
+	GetListCategories(query string, limit int) ([]entities.Category, error)
 }

@@ -11,7 +11,10 @@ type AdminCategoryHandler struct {
 }
 
 func (h *AdminCategoryHandler) GetListCategories(c *fiber.Ctx) error {
-	categories, err := h.categoryUseCase.GetListCategories()
+	query := c.Query("q", "")
+	limit := 10
+
+	categories, err := h.categoryUseCase.GetListCategories(query, limit)
 	if err != nil {
 		return err
 	}

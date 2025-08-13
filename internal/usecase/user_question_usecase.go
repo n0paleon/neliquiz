@@ -10,7 +10,15 @@ type UserQuestionUseCase struct {
 	questionRepo domain.QuestionRepository
 }
 
-func (u *UserQuestionUseCase) GetRandomQuestion() (*entities.Question, error) {
+func (u *UserQuestionUseCase) GetRandomQuestion(categories ...string) (*entities.Question, error) {
+	if len(categories) > 0 {
+		result, err := u.questionRepo.GetRandomByCategoryNames(categories)
+		if err != nil {
+			return nil, err
+		}
+		return result, nil
+	}
+
 	result, err := u.questionRepo.GetRandom()
 	if err != nil {
 		return nil, errorx.InternalError(err)

@@ -4,6 +4,7 @@ import (
 	"NeliQuiz/internal/domain/entities"
 	"NeliQuiz/internal/errorx"
 	"NeliQuiz/internal/repository/schema"
+	"NeliQuiz/pkg/utils"
 	"crypto/rand"
 	"errors"
 	"fmt"
@@ -16,6 +17,8 @@ import (
 type PGQuestionRepository struct {
 	db *gorm.DB
 }
+
+var getRandomLimitQuery = 10
 
 func (r *PGQuestionRepository) Create(q *entities.Question) (*entities.Question, error) {
 	model := schema.ToQuestionSchema(q)
@@ -68,7 +71,7 @@ func (r *PGQuestionRepository) GetRandom() (*entities.Question, error) {
 	if err := r.db.
 		Preload("Categories").
 		Order("updated_at ASC").
-		Limit(10).
+		Limit(getRandomLimitQuery).
 		Find(&questions).Error; err != nil {
 		return nil, TranslateGormError(err)
 	}
@@ -152,7 +155,9 @@ func (r *PGQuestionRepository) PaginateQuestionsByCategory(categoryID string, pa
 
 func (r *PGQuestionRepository) Update(q *entities.Question) (*entities.Question, error) {
 	var existing schema.Question
-	if err := r.db.First(&existing, "id = ?", q.ID).Error; err != nil {
+	tx := r.db.Begin()
+
+	if err := tx.First(&existing, "id = ?", q.ID).Error; err != nil {
 		return nil, TranslateGormError(err)
 	}
 
@@ -162,7 +167,7 @@ func (r *PGQuestionRepository) Update(q *entities.Question) (*entities.Question,
 	existing.Options = q.Options
 	existing.ExplanationURL = q.ExplanationURL
 	existing.UpdatedAt = time.Now()
-	if err := r.db.Model(&schema.Question{ID: q.ID}).Updates(existing).Error; err != nil {
+	if err := tx.Model(&schema.Question{ID: q.ID}).Updates(existing).Error; err != nil {
 		return nil, TranslateGormError(err)
 	}
 
@@ -174,18 +179,58 @@ func (r *PGQuestionRepository) Update(q *entities.Question) (*entities.Question,
 		}
 	}
 
-	if err := r.db.Model(&schema.Question{ID: q.ID}).
+	if err := tx.Model(&schema.Question{ID: q.ID}).
 		Association("Categories").
 		Replace(newCategories); err != nil {
 		return nil, TranslateGormError(err)
 	}
 
 	var finalResult schema.Question
-	if err := r.db.Preload("Categories").First(&finalResult, "id = ?", q.ID).Error; err != nil {
+	if err := tx.Preload("Categories").First(&finalResult, "id = ?", q.ID).Error; err != nil {
+		return nil, TranslateGormError(err)
+	}
+
+	if err := tx.Commit().Error; err != nil {
 		return nil, TranslateGormError(err)
 	}
 
 	return finalResult.ToEntity(), nil
+}
+
+func (r *PGQuestionRepository) GetRandomByCategoryNames(names []string) (*entities.Question, error) {
+	if len(names) == 0 {
+		return nil, errorx.BadRequest("category names are empty")
+	}
+
+	for i, name := range names {
+		names[i] = utils.NormalizeTitle(name)
+	}
+
+	var questions []schema.Question
+	if err := r.db.
+		Joins("JOIN question_categories qc ON qc.question_id = questions.id").
+		Joins("JOIN categories c ON c.id = qc.category_id").
+		Where("c.name IN ?", names).
+		Preload("Categories").
+		Order("updated_at ASC").
+		Limit(getRandomLimitQuery).
+		Find(&questions).Error; err != nil {
+		return nil, TranslateGormError(err)
+	}
+
+	if len(questions) == 0 {
+		return nil, errorx.NotFound("no questions found for given category names")
+	}
+
+	n := big.NewInt(int64(len(questions)))
+	i, _ := rand.Int(rand.Reader, n)
+	selected := questions[i.Int64()]
+
+	go func() {
+		_ = r.updateHit(selected.ID)
+	}()
+
+	return selected.ToEntity(), nil
 }
 
 func NewPGQuestionRepository(db *gorm.DB) *PGQuestionRepository {

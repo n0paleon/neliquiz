@@ -5,6 +5,7 @@ import (
 	"NeliQuiz/internal/delivery/http/response"
 	"NeliQuiz/internal/domain"
 	"github.com/gofiber/fiber/v2"
+	"strings"
 )
 
 type UserQuestionHandler struct {
@@ -12,7 +13,14 @@ type UserQuestionHandler struct {
 }
 
 func (h *UserQuestionHandler) GetRandomQuestion(c *fiber.Ctx) error {
-	question, err := h.questionUseCase.GetRandomQuestion()
+	category := c.Query("category", "")
+	var categories []string
+
+	if category != "" {
+		categories = strings.Split(strings.TrimSpace(category), ",")
+	}
+
+	question, err := h.questionUseCase.GetRandomQuestion(categories...)
 	if err != nil {
 		return err
 	}
