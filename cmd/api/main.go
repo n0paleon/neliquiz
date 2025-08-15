@@ -1,13 +1,17 @@
 package main
 
 import (
-	"NeliQuiz/internal/config"
-	"NeliQuiz/internal/delivery/http"
-	"NeliQuiz/internal/domain"
+	categoryDelivery "NeliQuiz/internal/features/category/delivery"
+	categoryDomain "NeliQuiz/internal/features/category/domain"
+	categoryRepository "NeliQuiz/internal/features/category/repository"
+	categoryService "NeliQuiz/internal/features/category/usecase"
+	questionDelivery "NeliQuiz/internal/features/question/delivery"
+	questionDomain "NeliQuiz/internal/features/question/domain"
+	questionRepository "NeliQuiz/internal/features/question/repository"
+	questionService "NeliQuiz/internal/features/question/usecase"
 	"NeliQuiz/internal/infrastructures/database/postgres"
 	"NeliQuiz/internal/infrastructures/webserver"
-	"NeliQuiz/internal/repository"
-	"NeliQuiz/internal/usecase"
+	"NeliQuiz/internal/shared/config"
 	log "github.com/sirupsen/logrus"
 	"go.uber.org/fx"
 	"gorm.io/gorm"
@@ -24,7 +28,7 @@ func init() {
 }
 
 func main() {
-	cfg := config.New()
+	cfg := config.New(".env")
 	db, err := postgres.NewPostgresConnection(cfg)
 	if err != nil {
 		log.Fatal(err)
@@ -35,14 +39,12 @@ func main() {
 			func() (*config.Config, *gorm.DB) {
 				return cfg, db
 			},
-			fx.Annotate(repository.NewPGQuestionRepository, fx.As(new(domain.QuestionRepository))),
-			fx.Annotate(repository.NewPGCategoryRepository, fx.As(new(domain.CategoryRepository))),
-			fx.Annotate(usecase.NewAdminQuestionUseCase, fx.As(new(domain.AdminQuestionUseCase))),
-			fx.Annotate(usecase.NewAdminCategoryUseCase, fx.As(new(domain.AdminCategoryUseCase))),
-			fx.Annotate(usecase.NewUserQuestionUseCase, fx.As(new(domain.UserQuestionUseCase))),
-			http.NewAdminQuestionHandler,
-			http.NewAdminCategoryHandler,
-			http.NewUserQuestionHandler,
+			fx.Annotate(categoryRepository.NewCategoryRepository, fx.As(new(categoryDomain.CategoryRepository))),
+			fx.Annotate(questionRepository.NewQuestionRepository, fx.As(new(questionDomain.QuestionRepository))),
+			fx.Annotate(categoryService.NewCategoryUseCase, fx.As(new(categoryDomain.CategoryUseCase))),
+			fx.Annotate(questionService.NewQuestionUseCase, fx.As(new(questionDomain.QuestionUseCase))),
+			categoryDelivery.NewCategoryHandler,
+			questionDelivery.NewQuestionHandler,
 			webserver.NewRouter,
 			webserver.NewServer,
 		),

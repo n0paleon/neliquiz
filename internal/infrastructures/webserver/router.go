@@ -1,25 +1,25 @@
 package webserver
 
-import "NeliQuiz/internal/delivery/http"
+import (
+	categoryDelivery "NeliQuiz/internal/features/category/delivery"
+	questionDelivery "NeliQuiz/internal/features/question/delivery"
+)
 
 type Router struct {
-	adminQuestionHandler *http.AdminQuestionHandler
-	adminCategoryHandler *http.AdminCategoryHandler
-	userQuestionHandler  *http.UserQuestionHandler
-	server               *Server
+	categoryHandler *categoryDelivery.CategoryHandler
+	questionHandler *questionDelivery.QuestionHandler
+	server          *Server
 }
 
 func NewRouter(
-	adminQuestionHandler *http.AdminQuestionHandler,
-	adminCategoryHandler *http.AdminCategoryHandler,
-	userQuestionHandler *http.UserQuestionHandler,
+	categoryHandler *categoryDelivery.CategoryHandler,
+	questionHandler *questionDelivery.QuestionHandler,
 	server *Server,
 ) *Router {
 	return &Router{
-		adminQuestionHandler: adminQuestionHandler,
-		adminCategoryHandler: adminCategoryHandler,
-		userQuestionHandler:  userQuestionHandler,
-		server:               server,
+		categoryHandler: categoryHandler,
+		questionHandler: questionHandler,
+		server:          server,
 	}
 }
 
@@ -27,15 +27,16 @@ func (r *Router) RegisterRoutes() {
 	route := r.server.app.Group("/")
 
 	admin := route.Group("/admin")
-	// question routes
-	admin.Post("/questions", r.adminQuestionHandler.PostCreateQuestion)
-	admin.Get("/questions", r.adminQuestionHandler.GetListQuestions)
-	admin.Delete("/questions/:id", r.adminQuestionHandler.DeleteQuestion)
-	admin.Get("/questions/:id", r.adminQuestionHandler.GetQuestionDetail)
-	admin.Put("/questions/:id", r.adminQuestionHandler.PutQuestion)
-	// category routes
-	admin.Get("/categories", r.adminCategoryHandler.GetListCategories)
+	// admin question routes
+	admin.Post("/questions", r.questionHandler.CreateQuestion)
+	admin.Get("/questions", r.questionHandler.GetListQuestion)
+	admin.Delete("/questions/:id", r.questionHandler.DeleteQuestion)
+	admin.Get("/questions/:id", r.questionHandler.GetQuestionDetail)
+	admin.Put("/questions/:id", r.questionHandler.UpdateQuestionDetail)
 
-	route.Get("/questions/random", r.userQuestionHandler.GetRandomQuestion)
-	route.Post("/questions/:id/verify", r.userQuestionHandler.CheckAnswer)
+	// category routes
+	route.Get("/categories", r.categoryHandler.GetListCategories)
+
+	route.Get("/questions/random", r.questionHandler.GetRandomQuestion)
+	route.Post("/questions/:id/verify", r.questionHandler.PostVerifyAnswer)
 }
