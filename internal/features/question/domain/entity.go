@@ -25,17 +25,36 @@ type Option struct {
 }
 
 // CheckAnswerWithOption checks if the selected option ID matches the correct answer,
-// and also returns the full Option object. It returns:
-// - a boolean indicating whether the answer is correct,
-// - the corresponding Option (if found),
+// and always returns the correct answer option. It returns:
+// - a boolean indicating whether the selected answer is correct,
+// - the correct answer Option (always returns the correct option regardless of selected option),
 // - and an error if the option ID does not exist.
 func (q *Question) CheckAnswerWithOption(selectedOptionID string) (bool, *Option, error) {
+	// First, check if the selected option exists
+	var selectedOptionExists bool
+	var isSelectedCorrect bool
+
 	for _, o := range q.Options {
 		if o.ID == selectedOptionID {
-			return o.IsCorrect, &o, nil
+			selectedOptionExists = true
+			isSelectedCorrect = o.IsCorrect
+			break
 		}
 	}
-	return false, nil, errors.New("selected option not found in this question")
+
+	if !selectedOptionExists {
+		return false, nil, errors.New("selected option not found in this question")
+	}
+
+	// Find and return the correct answer option
+	for _, o := range q.Options {
+		if o.IsCorrect {
+			return isSelectedCorrect, &o, nil
+		}
+	}
+
+	// This should never happen if validation is properly implemented
+	return false, nil, errors.New("no correct answer found in question")
 }
 
 // Validate checks if the question satisfies all rules:
@@ -72,6 +91,7 @@ func (q *Question) Validate() error {
 	if correctCount == 0 {
 		return errors.New("must have one correct answer")
 	}
+
 	if correctCount > 1 {
 		return errors.New("only one option can be marked as correct")
 	}
@@ -99,7 +119,7 @@ func (q *Question) AddOption(option ...Option) error {
 	for _, o := range option {
 		q.Options = append(q.Options, o)
 	}
-	q.UpdatedAt = time.Now()
 
+	q.UpdatedAt = time.Now()
 	return nil
 }

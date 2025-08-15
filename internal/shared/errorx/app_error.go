@@ -55,5 +55,5 @@ func BadRequest(msg string) AppError {
 }
 
 func InternalError(cause error) AppError {
-	return NewAppError(http.StatusInternalServerError, "internal server error", cause)
+	return NewAppError(http.StatusInternalServerError, cause.Error(), cause)
 }
