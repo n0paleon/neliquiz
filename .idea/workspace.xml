@@ -5,6 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7392c3e4-310d-4db0-a866-82d05387307b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/features/category/delivery/http_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/category/domain/entity.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/category/domain/repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/category/domain/service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/category/repository/mocks/category_repository_mock.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/category/repository/schema.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/category/usecase/mocks/category_usecase_mock.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/category/usecase/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/question/delivery/dto/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/question/delivery/dto/response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/question/delivery/http_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/question/domain/entity.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/question/domain/repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/question/domain/service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/features/question/usecase/usecase_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/apihelper/parse_validate.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/apihelper/response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/repoutil/sanitize_str.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/shared/repoutil/translate_db_err.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/.env" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/api/main.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/control-plane/cmd/scheduler/main.go" afterDir="false" />
@@ -47,19 +66,46 @@
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random.go" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../TuruAuto-Go/worker/util/random_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/delivery/http/admin_category_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/admin_category_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/category.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/category.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/question.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/question.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/mocks/category_repository_mock.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/mocks/category_repository_mock.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/mocks/question_repository_mock.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/mocks/question_repository_mock.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/pg_category_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_category_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/pg_category_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_category_repository_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_category_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/admin_category_usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_category_usecase_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/admin_category_usecase_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/shared/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/shared/config/config_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/admin_category_handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/admin_question_handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/dto/category.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/dto/question.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/dto/quiz.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/response/helper.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/delivery/http/user_question_handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/category.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/entities/category.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/entities/category_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/entities/question.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/entities/question_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/question.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/errorx/app_error.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/shared/errorx/app_error.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infrastructures/database/postgres/pool.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/pool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infrastructures/database/postgres/testhelper/pool.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infrastructures/database/postgres/testhelper/pool.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infrastructures/webserver/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/infrastructures/webserver/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/errors.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/mocks/category_repository_mock.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/mocks/question_repository_mock.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/question/repository/mocks/question_repository_mock.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_category_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/category/repository/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_category_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/category/repository/repository_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/question/repository/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_question_repository_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/question/repository/repository_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/pg_repository_utility.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/schema/category_schema.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/schema/question_schema.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/question/repository/schema.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repository/schema/schema.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_category_usecase.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_category_usecase_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/category/usecase/usecase_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_question_usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/features/question/usecase/usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/admin_question_usecase_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/user_question_usecase.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/usecase/user_question_usecase_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/utils/id_generator.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/shared/strutil/id_generator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/utils/normalize_string.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/shared/strutil/normalize_string.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/initiator.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../TuruAuto-Go/app/visit.go" beforeDir="false" />
@@ -153,11 +199,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\delivery\http" />
-      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\domain" />
-      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz" />
-      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuizz" />
-      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuizz\config" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\shared\strutil" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\features\question\usecase" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\features\question\repository\mocks" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\features\category\repository\mocks" />
+      <recent name="C:\Users\PC\Desktop\Deployments\GOLANG\NeliQuiz\internal\features\category\repository" />
     </key>
   </component>
   <component name="RunManager" selected="Go Test.TestPGQuestionRepository in NeliQuiz/internal/repository">

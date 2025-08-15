@@ -1,8 +1,9 @@
 package webserver
 
 import (
-	"NeliQuiz/internal/config"
-	"NeliQuiz/internal/errorx"
+	"NeliQuiz/internal/shared/apihelper"
+	"NeliQuiz/internal/shared/config"
+	"NeliQuiz/internal/shared/errorx"
 	"context"
 	"errors"
 	"github.com/bytedance/sonic"
@@ -18,27 +19,16 @@ type Server struct {
 
 func NewServer(cfg *config.Config) *Server {
 	app := fiber.New(fiber.Config{
-		// Error handler global
-		ErrorHandler: ErrorHandler,
-		// Maksimum ukuran body (hindari payload membabi buta)
-		BodyLimit: 4 * 1024 * 1024, // 4 MB
-		// Maksimum waktu baca header (anti slowloris)
-		ReadTimeout: 10 * time.Second,
-		// Maksimum waktu tulis response
-		WriteTimeout: 10 * time.Second,
-		// Proxy trusted (kalau pakai reverse proxy, load balancer)
-		// misal TrueClientIP / X-Forwarded-For
-		ProxyHeader: fiber.HeaderXForwardedFor,
-		// Case sensitive URL: true = /users ≠ /Users
-		CaseSensitive: true,
-		// Strict routing: true = /users ≠ /users/
-		StrictRouting: true,
-		AppName:       "NeliQuiz",
-		// JSON Encoder
-		JSONEncoder: sonic.Marshal,
-		// JSON Decoder
-		JSONDecoder: sonic.Unmarshal,
-		// Enable print routes?
+		ErrorHandler:      ErrorHandler,
+		BodyLimit:         4 * 1024 * 1024, // 4 MB
+		ReadTimeout:       10 * time.Second,
+		WriteTimeout:      10 * time.Second,
+		ProxyHeader:       fiber.HeaderXForwardedFor,
+		CaseSensitive:     true,
+		StrictRouting:     true,
+		AppName:           "NeliQuiz",
+		JSONEncoder:       sonic.Marshal,
+		JSONDecoder:       sonic.Unmarshal,
 		EnablePrintRoutes: true,
 	})
 
@@ -87,10 +77,10 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 			}).Error(appErr.Message())
 		}
 
-		return c.Status(appErr.Code()).JSON(fiber.Map{
-			"status": "error",
-			"data":   "",
-			"error":  appErr.Message(),
+		return c.Status(appErr.Code()).JSON(apihelper.APIResponse[any]{
+			Status:  "error",
+			Data:    nil,
+			Message: appErr.Message(),
 		})
 	}
 
@@ -101,9 +91,9 @@ func ErrorHandler(c *fiber.Ctx, err error) error {
 		"method": c.Method(),
 	}).Error("unhandled error")
 
-	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-		"status": "error",
-		"data":   "",
-		"error":  "internal server error",
+	return c.Status(fiber.StatusInternalServerError).JSON(apihelper.APIResponse[any]{
+		Status:  "error",
+		Data:    nil,
+		Message: "internal server error",
 	})
 }
