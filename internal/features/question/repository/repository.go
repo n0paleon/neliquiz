@@ -77,6 +77,10 @@ func (r *PGQuestionRepository) GetRandom() (*questionDomain.Question, error) {
 		return nil, repoutil.TranslateGormError(err)
 	}
 
+	if len(questions) < 1 {
+		return nil, errorx.NotFound("no question found")
+	}
+
 	n := big.NewInt(int64(len(questions)))
 	i, _ := rand.Int(rand.Reader, n)
 	selected := questions[i.Int64()]
@@ -219,7 +223,7 @@ func (r *PGQuestionRepository) GetRandomByCategoryNames(names []string) (*questi
 		return nil, repoutil.TranslateGormError(err)
 	}
 
-	if len(questions) == 0 {
+	if len(questions) < 1 {
 		return nil, errorx.NotFound("no questions found for given category names")
 	}
 

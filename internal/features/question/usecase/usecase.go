@@ -21,7 +21,7 @@ func (u *UseCase) CreateQuestion(q *questionDomain.Question) (*questionDomain.Qu
 	q.Categories = categories
 
 	if err = q.Validate(); err != nil {
-		return nil, err
+		return nil, errorx.BadRequest(err.Error())
 	}
 
 	result, err := u.questionRepo.Create(q)
@@ -120,12 +120,7 @@ func (u *UseCase) GetRandomQuestion(categories ...string) (*questionDomain.Quest
 		return result, nil
 	}
 
-	result, err := u.questionRepo.GetRandom()
-	if err != nil {
-		return nil, errorx.InternalError(err)
-	}
-
-	return result, nil
+	return u.questionRepo.GetRandom()
 }
 
 func NewQuestionUseCase(questionRepository questionDomain.QuestionRepository, categoryUseCase categoryDomain.CategoryUseCase) *UseCase {

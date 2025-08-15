@@ -5,7 +5,7 @@ import "github.com/gofiber/fiber/v2"
 type APIResponse[T any] struct {
 	Status  string `json:"status"`
 	Data    *T     `json:"data"`
-	Message string `json:"error"`
+	Message string `json:"message"`
 }
 
 // SuccessResponse returns JSON with status: success.
