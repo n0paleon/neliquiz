@@ -30,7 +30,6 @@ func NewGameServer(cfg *config.Config) *Server {
 
 	addr := net.JoinHostPort(cfg.GameHost, cfg.GamePort)
 	wsAcceptor := acceptor.NewWSAcceptor(addr)
-	wsAcceptor.EnableProxyProtocol()
 	builder.AddAcceptor(wsAcceptor)
 	builder.Groups = groups.NewMemoryGroupService(builder.Config.Groups.Memory)
 	builder.Serializer = json.NewSerializer()
