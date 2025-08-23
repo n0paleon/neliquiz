@@ -36,7 +36,9 @@ jobs:
             # Build image tanpa cache
             podman build --no-cache -t neliquiz:latest .
 
-            podman run -d --name neliquiz -p 5080:${{ vars.HTTP_PORT }} \
+            podman run -d --name neliquiz \
+              -p 5080:${{ vars.HTTP_PORT }} \
+              -p 8880:${{ vars.GAME_PORT }} \
               -e DB_HOST='${{ secrets.DB_HOST }}' \
               -e DB_NAME='${{ secrets.DB_NAME }}' \
               -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
