@@ -29,8 +29,12 @@ type Config struct {
 	HTTPHost           string
 	HTTPPort           string
 	HTTPPrefork        bool
+	HTTPDebug          bool
 	ValidateApiGateway bool
 	ApiGatewayToken    string
+	GameHost           string
+	GamePort           string
+	GameDebug          bool
 }
 
 // New initializes the config with optional env filename.
@@ -52,8 +56,12 @@ func New(envFilename string) *Config {
 			HTTPHost:           GetEnv("HTTP_HOST", "0.0.0.0"),
 			HTTPPort:           GetEnv("HTTP_PORT", "3000"),
 			HTTPPrefork:        GetEnvAsBool("HTTP_PREFORK", false),
+			HTTPDebug:          GetEnvAsBool("HTTP_DEBUG", false),
 			ValidateApiGateway: GetEnvAsBool("VALIDATE_API_GATEWAY", false),
 			ApiGatewayToken:    GetEnv("API_GATEWAY_TOKEN", ""),
+			GameHost:           GetEnv("GAME_HOST", "localhost"),
+			GamePort:           GetEnv("GAME_PORT", "3000"),
+			GameDebug:          GetEnvAsBool("GAME_DEBUG", false),
 		}
 	})
 

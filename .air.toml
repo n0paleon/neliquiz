@@ -4,7 +4,7 @@ tmp_dir = "tmp"
 
 # === [ BUILD CONFIG ] ===
 [build]
-cmd = "go build -o ./tmp/main.exe cmd/api/main.go"
+cmd = "go build -o ./tmp/main.exe cmd/app/main.go"
 bin = "./tmp/main.exe"
 delay = 1000 # ms
 exclude_dir = ["assets", "tmp", "vendor"]

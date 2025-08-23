@@ -8,6 +8,7 @@ import (
 	"errors"
 	"github.com/bytedance/sonic"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	recover2 "github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/sirupsen/logrus"
 	"time"
@@ -37,6 +38,13 @@ func NewServer(cfg *config.Config) *Server {
 	}
 	app.Use(recover2.New())
 
+	if cfg.HTTPDebug {
+		app.Use(cors.New(cors.Config{
+			AllowMethods: "*",
+			AllowOrigins: "*",
+		}))
+	}
+
 	return &Server{app: app}
 }
 
@@ -44,8 +52,8 @@ func (s *Server) Listen(addr string) error {
 	return s.app.Listen(addr)
 }
 
-func (s *Server) Shutdown() error {
-	return s.app.Shutdown()
+func (s *Server) Shutdown(ctx context.Context) error {
+	return s.app.ShutdownWithContext(ctx)
 }
 
 func (s *Server) ShutdownWithContext(ctx context.Context) error {
