@@ -27,7 +27,6 @@ func (s *QuestionSchema) BeforeCreate(tx *gorm.DB) (err error) {
 	s.ID = strutil.GenerateULID()
 
 	for i, _ := range s.Options {
-		fmt.Println("s.ID =>", s.ID)
 		s.Options[i].ID = strutil.GenerateULID()
 	}
 

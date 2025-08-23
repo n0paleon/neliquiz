@@ -3,6 +3,7 @@ package repository
 import (
 	categoryRepo "NeliQuiz/internal/features/category/repository"
 	questionDomain "NeliQuiz/internal/features/question/domain"
+	"NeliQuiz/internal/infrastructures/workerpool"
 	"NeliQuiz/internal/shared/errorx"
 	"NeliQuiz/internal/shared/repoutil"
 	"NeliQuiz/internal/shared/strutil"
@@ -85,9 +86,10 @@ func (r *PGQuestionRepository) GetRandom() (*questionDomain.Question, error) {
 	i, _ := rand.Int(rand.Reader, n)
 	selected := questions[i.Int64()]
 
-	go func() {
+	pool := workerpool.GetPool()
+	_ = pool.Submit(func() {
 		_ = r.updateHit(selected.ID)
-	}()
+	})
 
 	return selected.ToEntity(), nil
 }
