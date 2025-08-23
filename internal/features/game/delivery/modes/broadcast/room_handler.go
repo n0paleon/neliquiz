@@ -3,7 +3,6 @@ package broadcast
 import (
 	"NeliQuiz/internal/features/game/delivery/gameerr"
 	"NeliQuiz/internal/infrastructures/gameserver"
-	"NeliQuiz/internal/infrastructures/workerpool"
 	"context"
 	"github.com/sirupsen/logrus"
 	pitaya "github.com/topfreegames/pitaya/v3/pkg"
@@ -22,16 +21,13 @@ type Room struct {
 }
 
 func (r *Room) AfterInit() {
-	r.timer = pitaya.NewTimer(5*time.Second, func() {
-		pool := workerpool.GetPool()
-		_ = pool.Submit(func() {
-			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-			defer cancel()
+	r.timer = pitaya.NewTimer(2*time.Second, func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
 
-			if err := r.app.GroupBroadcast(ctx, r.serverType, r.groupName, "onPing", time.Now().UnixMilli()); err != nil {
-				logrus.Errorf("failed to send group broadcast: %v", err)
-			}
-		})
+		if err := r.app.GroupBroadcast(ctx, r.serverType, r.groupName, "onPing", time.Now().UnixMilli()); err != nil {
+			logrus.Errorf("failed to send group broadcast: %v", err)
+		}
 	})
 }
 
