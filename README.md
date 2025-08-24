@@ -40,4 +40,5 @@ NeliQuiz is a multiplayer quiz game built with Go, featuring a modular architect
 4. **Access the Backend:**
     - API: http://localhost:3000/
     - Game server: ws://localhost:3250 
-    - Postman collection: [Postman Collection](https://turu-developer.postman.co/workspace/Turu-Developer-Workspace~c575b45e-1a7e-4bd8-8026-b9c87dbf6eae/collection/32865624-58030ff2-6ba7-4dd0-b9e3-7cd0f6467538?action=share&source=copy-link&creator=32865624)
+    - [Postman Collection](https://turu-developer.postman.co/workspace/Turu-Developer-Workspace~c575b45e-1a7e-4bd8-8026-b9c87dbf6eae/collection/32865624-58030ff2-6ba7-4dd0-b9e3-7cd0f6467538?action=share&source=copy-link&creator=32865624)
+    - [OpenAPI](/api/openapi.yaml)

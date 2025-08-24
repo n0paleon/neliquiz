@@ -1,0 +1,223 @@
+openapi: 3.0.0
+info:
+  title: Neliquiz Dev
+  version: 1.0.0
+servers:
+  - url: http://{{base_url}}
+  - url: http://{{cognito_domain}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Admin
+  - name: User
+  - name: Category
+  - name: Auth Cognito
+paths:
+  /admin/questions:
+    post:
+      tags:
+        - Admin
+      summary: Create Question
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                content: Berapa hasil dari 200 + 475?
+                options:
+                  - content: '200'
+                    is_correct: false
+                  - content: '775'
+                    is_correct: false
+                  - content: '675'
+                    is_correct: true
+                  - content: '600'
+                    is_correct: false
+                  - content: '575'
+                    is_correct: false
+                categories:
+                  - IPS
+                  - Matematika
+                  - Sains
+                explanation_url: https://www.google.com/
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Admin
+      summary: Get List Questions with custom Sort and Order filter
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+          example: '1'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          example: '20'
+        - name: sort
+          in: query
+          schema:
+            type: string
+          example: created_at
+        - name: order
+          in: query
+          schema:
+            type: string
+          example: ASC
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/questions/01K2QXGGVV2FRYN8AXN2EYYZ3G:
+    get:
+      tags:
+        - Admin
+      summary: Get Question Detail
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Admin
+      summary: Edit Question Detail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                content: Berapa hasil dari A + B?
+                hit: 100
+                options:
+                  - id: 01K2QW9T6QGXZKQ3G3SW3CP57H
+                    content: '200'
+                    is_correct: false
+                  - id: 01K2QW9T6QJRN9V1ZN4ZE41SG8
+                    content: '775'
+                    is_correct: false
+                  - id: 01K2QW9T6QGQZB75MPAJQ5N4MW
+                    content: '675'
+                    is_correct: false
+                  - id: 01K2QW9T6QFSWX1MQN9KC3F6DQ
+                    content: '600'
+                    is_correct: true
+                  - id: 01K2QW9T6Q2QDY53WMW3DEX3SJ
+                    content: '575'
+                    is_correct: false
+                categories:
+                  - katolik
+                  - HINDuU
+                  - matematika
+                  - iSlaM
+                explanation_url: https://www.wikipedia.org/
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /admin/questions/2d6f3f8c-9304-4110-a096-f91f190c5e79:
+    delete:
+      tags:
+        - Admin
+      summary: Delete Question
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /questions/random:
+    get:
+      tags:
+        - User
+      summary: Get Random Question with custom category
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+          example: sains,matematika
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /questions/01K2B4D59CCATSNKYQFVNG1V91/verify:
+    post:
+      tags:
+        - User
+      summary: Verify Answer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                selected_option_id: 01K2B4D59CQSFFV1H6BGKCZ8JZ
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /categories:
+    get:
+      tags:
+        - Category
+      summary: Search category by name
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+          example: matematika
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /oauth2/token:
+    post:
+      tags:
+        - Auth Cognito
+      summary: Refresh Token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                grant_type:
+                  type: string
+                  example: refresh_token
+                client_id:
+                  type: string
+                  example: 744hqvetk28ins1fddh9kp63jh
+                refresh_token:
+                  type: string
+                  example: '{{refresh_token}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
