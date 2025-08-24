@@ -42,5 +42,5 @@ jobs:
             API_GATEWAY_TOKEN=${{ vars.API_GATEWAY_TOKEN }}
             EOL
 
-            podman compose -f build --no-cache
-            podman compose up -d --remove-orphans
+            podman-compose -f build --no-cache
+            podman-compose up -d --remove-orphans
