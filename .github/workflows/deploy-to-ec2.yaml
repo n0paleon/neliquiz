@@ -20,39 +20,27 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            set -e
-            
-            git config --global --add safe.directory /home/${USER}/app
-            
             cd ~/app
             git fetch origin main
             git reset --hard origin/main
 
-            # Hapus image lama untuk jamin build fresh
-            podman stop neliquiz || true
-            podman rm neliquiz || true
-            podman rmi neliquiz:latest || true
+            cat > .env <<EOL
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_PORT=${{ secrets.DB_PORT }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_SSLMODE=${{ secrets.DB_SSLMODE }}
+            HTTP_HOST=${{ vars.HTTP_HOST }}
+            HTTP_PORT=${{ vars.HTTP_PORT }}
+            HTTP_PREFORK=${{ vars.HTTP_PREFORK }}
+            HTTP_DEBUG=${{ vars.HTTP_DEBUG }}
+            GAME_HOST=${{ vars.GAME_HOST }}
+            GAME_PORT=${{ vars.GAME_PORT }}
+            GAME_DEBUG=${{ vars.GAME_DEBUG }}
+            VALIDATE_API_GATEWAY=${{ vars.VALIDATE_API_GATEWAY }}
+            API_GATEWAY_TOKEN=${{ vars.API_GATEWAY_TOKEN }}
+            EOL
 
-            # Build image tanpa cache
-            podman build --no-cache -t neliquiz:latest .
-
-            podman run -d --name neliquiz \
-              -p ${{ vars.HTTP_PORT }}:${{ vars.HTTP_PORT }} \
-              -p ${{ vars.GAME_PORT }}:${{ vars.GAME_PORT }} \
-              -e DB_HOST='${{ secrets.DB_HOST }}' \
-              -e DB_NAME='${{ secrets.DB_NAME }}' \
-              -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
-              -e DB_PORT='${{ secrets.DB_PORT }}' \
-              -e DB_USER='${{ secrets.DB_USER }}' \
-              -e DB_SSLMODE='${{ secrets.DB_SSLMODE }}' \
-              -e HTTP_HOST='${{ vars.HTTP_HOST }}' \
-              -e HTTP_PORT='${{ vars.HTTP_PORT }}' \
-              -e HTTP_PREFORK='${{ vars.HTTP_PREFORK }}' \
-              -e HTTP_DEBUG='${{ vars.HTTP_DEBUG }}' \
-              -e GAME_HOST='${{ vars.GAME_HOST }}' \
-              -e GAME_PORT='${{ vars.GAME_PORT }}' \
-              -e GAME_DEBUG='${{ vars.GAME_DEBUG }}' \
-              -e VALIDATE_API_GATEWAY='${{ vars.VALIDATE_API_GATEWAY }}' \
-              -e API_GATEWAY_TOKEN='${{ vars.API_GATEWAY_TOKEN }}' \
-              --restart=always \
-              neliquiz:latest
+            podman-compose -f build --no-cache
+            podman-compose up -d --remove-orphans
