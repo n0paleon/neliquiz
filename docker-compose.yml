@@ -7,6 +7,6 @@ services:
     env_file:
       - .env
     ports:
-      - "${HTTP_HOST}:${HTTP_PORT}"
-      - "${GAME_HOST}:${GAME_PORT}"
+      - ${HTTP_PORT}:${HTTP_PORT}"
+      - "${GAME_PORT}:${GAME_PORT}"
     restart: unless-stopped
