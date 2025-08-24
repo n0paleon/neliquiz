@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: neliquiz_backend
+    env_file:
+      - .env
+    ports:
+      - "${HTTP_HOST}:${HTTP_PORT}"
+      - "${GAME_HOST}:${GAME_PORT}"
+    restart: unless-stopped
